@@ -13,7 +13,7 @@
 // import HelloWorld from "@/components/HelloWorld.vue";
 import TourmateHome from "@/components/Home/TourmateHome.vue";
 import SidebarNav from "@/components/SidebarNav.vue";
-import AvatarDropdown from "@/components/Member/AvatarDropdown.vue";
+import AvatarDropdown from "@/components/User/AvatarDropdown.vue";
 
 export default {
   name: "HomeView",

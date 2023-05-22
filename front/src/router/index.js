@@ -9,6 +9,25 @@ import CommunityView from "../views/CommunityView.vue";
 
 Vue.use(VueRouter);
 
+// import store from "@/store";
+
+// const onlyAuthUser = async (to, from, next) => {
+//   console.log("로그인 전 토큰 체크");
+
+//   if (store.state.isLogin) {
+//     await store.dispatch("userStore/checkUserAuth", store.state.accessToken);
+//   }
+
+//   if (!store.state.isLogin || !store.state.isValidToken) {
+//     alert("로그인이 필요한 페이지입니다..");
+//     // next({ name: "login" });
+//     router.push({ name: "login" });
+//   } else {
+//     console.log("로그인 인증됨");
+//     next();
+//   }
+// };
+
 const routes = [
   {
     path: "/",
