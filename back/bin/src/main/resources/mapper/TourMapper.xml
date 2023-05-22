@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.tourmate.mapper.TourMapper">
+
+	<select id="selectList" resultType="com.ssafy.tourmate.dto.TourDto">
+	<bind name="pattern" value="'%' + keyword + '%'" />
+		SELECT 
+			CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE, ADDR1, ADDR2, LATITUDE, LONGITUDE, IFNULL(CNT_TB.CI, 0) as likeCount
+		FROM
+			ATTRACTION_INFO AS A
+				LEFT JOIN (SELECT COUNT(CONTENT_ID) AS CNT, CONTENT_ID AS CI
+							FROM USER_ATTRACTION_LIKE
+							GROUP BY CONTENT_ID) AS CNT_TB
+				ON A.CONTENT_ID = CNT_TB.CI
+		WHERE TITLE LIKE #{pattern}
+		<if test="areaCode != 0">
+			AND SIDO_CODE = #{areaCode}
+		</if>
+		ORDER BY likeCount DESC
+	</select>
+	
+	<select id="selectDetail" resultType="com.ssafy.tourmate.dto.TourDto">
+		
+		SELECT 
+			CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE, ADDR1, ADDR2, LATITUDE, LONGITUDE, IFNULL(CNT_TB.CI, 0) as likeCount
+		FROM
+			ATTRACTION_INFO AS A
+				LEFT JOIN (SELECT COUNT(CONTENT_ID) AS CNT, CONTENT_ID AS CI
+							FROM USER_ATTRACTION_LIKE
+							GROUP BY CONTENT_ID) AS CNT_TB
+				ON A.CONTENT_ID = CNT_TB.CI
+		WHERE A.CONTENT_ID = #{contentId}
+
+	</select>
+	
+	<insert id="createLike">
+	
+		INSERT INTO USER_ATTRACTION_LIKE (USER_ID, CONTENT_ID)
+		VALUES (#{userId}, #{contentId})
+	
+	</insert>
+	
+	<delete id="deleteLike">
+	
+		DELETE FROM USER_ATTRACTION_LIKE
+		WHERE CONTENT_ID = ##{contentId} AND USER_ID LIKE #{userId}
+	
+	</delete>
+
+</mapper>

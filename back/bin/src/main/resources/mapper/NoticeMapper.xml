@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.tourmate.mapper.NoticeMapper">
+
+	<select id="selectList" resultType="com.ssafy.tourmate.dto.NoticeDto">
+	
+		SELECT *
+		FROM NOTICE
+		<if test="keyword != null" >
+			<bind name="pattern" value="'%' + keyword + '%'" />
+			WHERE TITLE LIKE #{pattern}
+		</if>
+		ORDER BY DATE
+	
+	</select>
+	
+	<select id="selectOne" resultType="com.ssafy.tourmate.dto.NoticeDto">
+	
+		SELECT *
+		FROM NOTICE
+		WHERE ID = #{id}
+	
+	</select>
+
+	<insert id="insertNotice" parameterType="com.ssafy.tourmate.dto.NoticeDto">
+	
+		INSERT INTO NOTICE (ID, TITLE, WRITER, CONTENT, DATE)
+		VALUES(#{id}, #{title}, #{writer}, #{content}, NOW())
+	
+	</insert>
+	
+	<update id="updateNotice" parameterType="com.ssafy.tourmate.dto.NoticeDto">
+	
+		UPDATE NOTICE
+		SET TITLE = #{title}, CONTENT = #{content}
+		WHERE ID = #{id}
+	
+	</update>
+	
+	<delete id="deleteNotice">
+	
+		DELETE FROM NOTICE
+		WHERE ID = #{id}
+	
+	</delete>
+
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.tourmate.mapper.CommentMapper">
+
+	<select id="selectTourCommentList" resultType="com.ssafy.tourmate.dto.CommentDto">
+	
+		SELECT 
+			ID, CONTENT_ID AS contentId, COMMENT, WRITER, WRITE_DATE AS writeDate
+		FROM 
+			ATTRACTION_COMMENT
+			
+	</select>
+	
+	<select id="selectPlanCommentList" resultType="com.ssafy.tourmate.dto.CommentDto">
+	
+		SELECT 
+			ID, PLAN_ID AS contentId, COMMENT, WRITER, WRITE_DATE AS writeDate
+		FROM 
+			PLAN_COMMENT
+			
+	</select>
+	
+	<insert id="insertTourComment" parameterType="com.ssafy.tourmate.dto.CommentDto">
+	
+		INSERT INTO 
+			ATTRACTION_COMMENT (CONTENT_ID, COMMENT, WRITER, WRITE_DATE)
+		VALUES
+			(#{contentId}, #{comment}, #{writer}, NOW())
+	
+	</insert>
+	
+	<insert id="insertPlanComment" parameterType="com.ssafy.tourmate.dto.CommentDto">
+	
+		INSERT INTO 
+			PLAN_COMMENT (PLAN_ID, COMMENT, WRITER, WRITE_DATE)
+		VALUES
+			(#{contentId}, #{comment}, #{writer}, NOW())
+	
+	</insert>
+	
+	<delete id="deletePlanComment" >
+	
+		DELETE FROM 
+			ATTRACTION_COMMENT
+		WHERE ID = #{commentId}
+	
+	</delete>
+	
+	<delete id="deleteTourComment">
+	
+		DELETE FROM 
+			PLAN_COMMENT
+		WHERE ID = #{commentId}
+	
+	</delete>
+
+</mapper>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.tourmate.mapper.PlanMapper">
+
+	<select id="select" resultType="com.ssafy.tourmate.dto.PlanDto">
+
+		SELECT 
+			A.USER_ID as userId, A.PLAN_ID as planId, A.SUBJECT, A.SUMMARY, A.CREATE_TIME as createTime, A.HIT, CNT_TB.CNT AS likeCount
+		FROM 
+			PLAN AS A
+				LEFT JOIN 
+					(SELECT 
+						COUNT(PLAN_ID_LIKE) AS CNT, PLAN_ID_LIKE AS PI
+					FROM 
+						USER_PLAN_LIKE
+					GROUP BY 
+						PLAN_ID_LIKE) AS CNT_TB
+				ON A.PLAN_ID = CNT_TB.PI
+
+		<if test="title != null">
+			<bind name="pattern" value="'%' + title + '%'" />
+			WHERE SUBJECT LIKE #{pattern}
+		</if>
+		<if test="userName != null">
+			WHERE USER_ID IN 
+				(SELECT USER_ID FROM USER WHERE USER_ID LIKE #{userId})
+		</if>
+		<choose>
+			<when test="sortType = 1">
+				ORDER BY CNT_TB.CNT DESC
+			</when>
+			<when test="sortType = 2">
+				ORDER BY A.HIT DESC
+			</when>
+			<otherwise>
+				ORDER BY CREATE_TIME DESC
+			</otherwise>
+		</choose>
+		
+
+	</select>
+
+	<select id="selectPlan"
+		resultType="com.ssafy.tourmate.dto.PlanDto">
+
+		SELECT 
+			USER_ID as userId, PLAN_ID as planId, SUBJECT,
+			SUMMARY, CREATE_TIME as createTime, HIT
+		FROM
+			PLAN
+		WHERE 
+			PLAN_ID = #{planId}
+
+	</select>
+
+	<select id="selectPlanAttractions"
+		resultType="com.ssafy.tourmate.dto.PlanAttractionDto">
+
+		SELECT 
+			A.CONTENT_ID AS contentId, imageURL,title, addr1,
+			addr2,latitude, longitude, likeCount, START_TIME AS startTime, END_TIME AS endTime
+		FROM
+				(SELECT
+					*
+				FROM
+					PLAN_ATTRACTIONS
+				WHERE
+					PLAN_ID = #{planId}
+				ORDER BY 
+					ATTRACTION_ORDER ASC) AS A
+
+			JOIN
+
+				(SELECT
+					B.CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE,
+					ADDR1, ADDR2, LATITUDE, LONGITUDE, CNT_TB.CNT as likeCount
+				FROM
+						ATTRACTION_INFO AS B
+					LEFT JOIN
+						(SELECT
+							COUNT(CONTENT_ID) AS CNT, CONTENT_ID AS CI
+						FROM 
+							USER_ATTRACTION_LIKE
+						GROUP BY
+							CONTENT_ID) AS CNT_TB
+					ON
+						B.CONTENT_ID = CNT_TB.CI) AS INFOS
+
+			ON
+				A.CONTENT_ID = INFOS.CONTENTID
+
+	</select>
+
+	<select id="countLiked" resultType="int">
+
+		SELECT 
+			COUNT(USER_ID_LIKE) AS CNT
+		FROM 
+			USER_PLAN_LIKE
+		WHERE
+			PLAN_ID_LIKE = #{planId}
+
+	</select>
+
+	<select id="checkLiked" resultType="int">
+
+		SELECT 
+			EXISTS(
+				SELECT 
+					1
+				FROM 
+					USER_PLAN_LIKE
+				WHERE
+					USER_ID_LIKE = #{userId} AND PLAN_ID_LIKE = #{planId})
+			AS CNT
+
+	</select>
+
+	<select id="checkBookmarked" resultType="int">
+
+		SELECT 
+			EXISTS(
+				SELECT 
+					1
+				FROM 
+					USER_PLAN_BOOKMARK
+				WHERE 
+					USER_ID = #{userId} AND PLAN_ID = #{planId}) 
+			AS CNT
+
+	</select>
+
+
+	<insert id="insertPlan"
+		parameterType="com.ssafy.tourmate.dto.PlanDto" useGeneratedKeys="true"
+		keyProperty="planId">
+
+		INSERT INTO 
+			PLAN(USER_ID, SUBJECT, SUMMARY, CREATE_TIME)
+		VALUES 
+			(#{userId}, #{subject}, #{summary}, NOW())
+
+	</insert>
+
+	<insert id="insertPlanAttractions"
+		parameterType="com.ssafy.tourmate.dto.PlanAttractionDto">
+
+		INSERT INTO 
+			PLAN_ATTRACTIONS(PLAN_ID, CONTENT_ID, ATTRACTION_ORDER,
+			START_TIME, END_TIME)
+		VALUES
+		<foreach collection="planAttractions" index="index"
+			item="item" separator=",">
+			(#{planId}, #{item.contentId}, #{index},
+			#{item.startTime}, #{item.endTime})
+		</foreach>
+
+	</insert>
+
+	<insert id="insertLike">
+
+		INSERT INTO 
+			USER_PLAN_LIKE (USER_ID_LIKE, PLAN_ID_LIKE)
+		VALUES 
+			(#{userId},	#{planId})
+
+	</insert>
+
+	<insert id="insertBookmark">
+
+		INSERT INTO 
+			USER_PLAN_BOOKMARK (USER_ID, PLAN_ID)
+		VALUES 
+			(#{userId}, #{planId})
+
+	</insert>
+
+
+	<update id="updatePlan"
+		parameterType="com.ssafy.tourmate.dto.PlanDto">
+
+		UPDATE 
+			PLAN
+		SET 
+			SUBJECT = #{subject}, SUMMARY =	#{summary}, CREATE_TIME = #{createTime}
+		WHERE 
+			PLAN_ID = #{planId}
+
+	</update>
+
+	<update id="updateHit">
+
+		UPDATE 
+			PLAN
+		SET 
+			HIT = HIT + 1
+		WHERE 
+			PLAN_ID = #{plan_id}
+
+	</update>
+
+
+	<delete id="deleteLike">
+
+		DELETE FROM 
+			USER_PLAN_LIKE
+		WHERE 
+			PLAN_ID_LIKE = #{planId}
+			<if test="userId != null">
+				AND USER_ID_LIKE = #{userId}
+			</if>
+
+	</delete>
+
+	<delete id="deleteBookmark">
+
+		DELETE FROM 
+			USER_PLAN_BOOKMARK
+		WHERE 
+			PLAN_ID = #{planId}
+			<if test="userId != null">
+				AND USER_ID = #{userId}
+			</if>
+
+
+	</delete>
+
+	<delete id="deletePlanAttractions">
+
+		DELETE FROM 
+			PLAN_ATTRACTIONS
+		WHERE 
+			PLAN_ID = #{planId}
+
+	</delete>
+
+	<delete id="deletePlan">
+
+		DELETE FROM 
+			PLAN
+		WHERE 
+			PLAN_ID = #{planId}
+
+	</delete>
+
+
+</mapper>
