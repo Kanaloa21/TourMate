@@ -29,6 +29,7 @@ const userStore = {
         (error) => {
           // 서버 에러 발생
           console.log(error);
+          alert("서버에 문제가 생겼습니다!");
         }
       );
     },
@@ -63,7 +64,7 @@ const userStore = {
           state.isValidToken = true;
         },
         (error) => {
-          console.log(error);
+          console.log("서버 에러 발생", error);
         }
       );
     },
@@ -79,11 +80,10 @@ const userStore = {
             state.userId = null;
             state.userName = null;
             state.isLogin = false;
-            // 로그아웃 완료, 라우터를 통해 메인으로 이동
+            console.log("로그아웃 완료");
           },
           (error) => {
-            // 서버 에러 발생
-            console.log(error);
+            console.log("서버 에러 발생", error);
           }
         );
       }

@@ -63,7 +63,7 @@ public class PlanController {
 	@GetMapping("/detail")
 	public ResponseEntity<PlanDto> searchPlanDetail(
 			@RequestParam("planId") @ApiParam("여행 계획 ID") int planId,
-			@RequestParam("userId") @ApiParam("유저 ID (로그인 했을 시)") String userId
+			@RequestParam(value = "userId", required = false) @ApiParam("유저 ID (로그인 했을 시)") String userId
 	) {
 		logger.debug("여행 계획 상세보기, Plan ID : {}, User ID : {}", planId, userId);
 		return new ResponseEntity<PlanDto>(planService.searchPlan(planId, userId), HttpStatus.OK);

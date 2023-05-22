@@ -26,10 +26,10 @@
 				(SELECT USER_ID FROM USER WHERE USER_ID LIKE #{userId})
 		</if>
 		<choose>
-			<when test="sortType = 1">
+			<when test="sortType == 1">
 				ORDER BY CNT_TB.CNT DESC
 			</when>
-			<when test="sortType = 2">
+			<when test="sortType == 2">
 				ORDER BY A.HIT DESC
 			</when>
 			<otherwise>
