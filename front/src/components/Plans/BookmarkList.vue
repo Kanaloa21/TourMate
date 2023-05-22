@@ -20,7 +20,7 @@
     <hr />
     <div>
       <draggable
-        :list="planList"
+        :list="wishList"
         :disabled="!enabled"
         class="list-group"
         ghost-class="ghost"
@@ -39,7 +39,7 @@
       </div> -->
         <div
           class="list-group-item"
-          v-for="element in planList"
+          v-for="element in wishList"
           :key="element.contentId"
           style="color: black"
         >
@@ -76,21 +76,21 @@ export default {
     },
 
     clearPlan() {
-      this.CLEAR_PLAN_LIST();
+      this.CLEAR_WISH_LIST();
     },
 
     deletePlan(index) {
-      this.DELETE_PLAN(index);
+      this.DELETE_WISH(index);
     },
 
-    ...mapMutations(planStore, ["ADD_PLAN_LIST", "CLEAR_PLAN_LIST", "DELETE_PLAN"]),
+    ...mapMutations(planStore, ["ADD_WISH_LIST", "CLEAR_WISH_LIST", "DELETE_WISH"]),
   },
 
   computed: {
     draggingInfo() {
       return this.dragging ? "under drag" : "";
     },
-    ...mapState(planStore, ["planList"]),
+    ...mapState(planStore, ["wishList"]),
   },
 };
 </script>
