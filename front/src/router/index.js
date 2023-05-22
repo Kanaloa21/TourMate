@@ -6,27 +6,28 @@ import MyPageView from "../views/MyPageView.vue";
 import NoticeView from "../views/NoticeView.vue";
 import PlansView from "../views/PlansView.vue";
 import CommunityView from "../views/CommunityView.vue";
+import UserView from "../views/UserView";
 
 Vue.use(VueRouter);
 
-// import store from "@/store";
+import store from "@/store";
 
-// const onlyAuthUser = async (to, from, next) => {
-//   console.log("로그인 전 토큰 체크");
+const onlyAuthUser = async (to, from, next) => {
+  console.log("로그인 전 토큰 체크");
 
-//   if (store.state.isLogin) {
-//     await store.dispatch("userStore/checkUserAuth", store.state.accessToken);
-//   }
+  if (store.state.isLogin) {
+    await store.dispatch("userStore/checkUserAuth", store.state.accessToken);
+  }
 
-//   if (!store.state.isLogin || !store.state.isValidToken) {
-//     alert("로그인이 필요한 페이지입니다..");
-//     // next({ name: "login" });
-//     router.push({ name: "login" });
-//   } else {
-//     console.log("로그인 인증됨");
-//     next();
-//   }
-// };
+  if (!store.state.isLogin || !store.state.isValidToken) {
+    alert("로그인이 필요한 페이지입니다..");
+    // next({ name: "login" });
+    router.push({ name: "login" });
+  } else {
+    console.log("로그인 인증됨");
+    next();
+  }
+};
 
 const routes = [
   {
@@ -62,9 +63,26 @@ const routes = [
       {
         path: "view/:planId",
         name: "planview",
-        // beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAuthUser,
         // component: () =>
         //   import(/* webpackChunkName: "community" */ "@/components/community/BoardDetail"),
+      },
+    ],
+  },
+  {
+    path: "/user",
+    name: "user",
+    component: UserView,
+    children: [
+      {
+        path: "login",
+        name: "login",
+        component: () => import(/* webpackChunkName: "login" */ "@/components/User/UserLogin"),
+      },
+      {
+        path: "regist",
+        name: "regist",
+        component: () => import(/* webpackChunkName: "regist" */ "@/components/User/UserRegister"),
       },
     ],
   },
