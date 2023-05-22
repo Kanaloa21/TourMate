@@ -75,7 +75,7 @@ export default {
   created() {},
   methods: {
     addPlan(attraction) {
-      this.ADD_PLAN_LIST(attraction);
+      this.ADD_WISH_LIST(attraction);
     },
 
     showDetail(attraction) {
@@ -103,7 +103,7 @@ export default {
     ...mapMutations(attractionStore, ["SET_MAP_CENTER_POS", "SET_MAP_FOCUS_ATTRACTION_INFO"]),
     ...mapActions(itemStore, ["getGugun"]),
     ...mapMutations(itemStore, ["CLEAR_GUGUN_LIST"]),
-    ...mapMutations(planStore, ["ADD_PLAN_LIST"]),
+    ...mapMutations(planStore, ["ADD_WISH_LIST"]),
   },
 
   computed: {

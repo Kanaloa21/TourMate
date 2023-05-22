@@ -50,7 +50,7 @@ export default {
     },
 
     drawMapByList() {
-      const positions = this.planList.map(
+      const positions = this.wishList.map(
         ({ latitude, longitude }) => new kakao.maps.LatLng(latitude, longitude)
       );
       console.log(positions);
@@ -83,7 +83,6 @@ export default {
         let level = this.map.getLevel();
         this.map.setLevel(level + 1);
         let tmp = this.map.getCenter();
-
         this.map.setCenter(new kakao.maps.LatLng(tmp.getLat(), tmp.getLng() - 0.02));
       }
     },
@@ -92,10 +91,10 @@ export default {
     },
   },
   computed: {
-    ...mapState(planStore, ["planList"]),
+    ...mapState(planStore, ["wishList"]),
   },
   watch: {
-    planList() {
+    wishList() {
       this.drawMapByList();
     },
     // attractionList() {
