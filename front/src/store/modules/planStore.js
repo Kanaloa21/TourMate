@@ -1,24 +1,38 @@
-// import http from "@/api/index.js";
+import http from "@/api/index.js";
 
 const planStore = {
   namespaced: true,
   state: {
+    wishList: [],
     planList: [],
   },
   getters: {},
   mutations: {
-    ADD_PLAN_LIST(state, data) {
-      state.planList.push(data);
+    ADD_WISH_LIST(state, data) {
+      state.wishList.push(data);
     },
-    CLEAR_PLAN_LIST(state) {
-      state.planList = [];
+    CLEAR_WISH_LIST(state) {
+      state.wishList = [];
     },
-    DELETE_PLAN(state, index) {
+    DELETE_WISH(state, index) {
       // state.planList.splice(index, 1);
-      state.planList = state.planList.filter(({ contentId }) => contentId != index);
+      state.wishList = state.wishList.filter(({ contentId }) => contentId != index);
+    },
+    GET_PLAN_LIST(state, data) {
+      state.planList = data;
     },
   },
-  actions: {},
+  actions: {
+    getWishList({ commit }, payload) {
+      let uri = "/plan?sortType=" + payload.sortType;
+
+      console.log(uri);
+      http.get(uri).then(({ data }) => {
+        console.log("data", data);
+        commit("GET_PLAN_LIST", data);
+      });
+    },
+  },
 };
 
 export default planStore;
