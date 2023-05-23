@@ -2,7 +2,7 @@
   <div class="write-area">
     <b-row class="m-1">
       <b-col style="text-align: left">
-        <b-form @submit="submit" @reset="reset">
+        <b-form>
           <b-row class="mt-3">
             <b-col class="col-lg-8 pr-0">
               <b-form-group id="subject-group" label="제목" label-for="subject">
@@ -16,12 +16,12 @@
               </b-form-group>
             </b-col>
             <b-col class="mt-4 mx-0 col-lg-2 p-0 pl-4">
-              <b-button type="submit" variant="primary" class="m-1" v-if="this.isLogin == true"
+              <b-button @click="mySubmit" variant="primary" class="m-1" v-if="this.isLogin == true"
                 >글작성</b-button
               >
             </b-col>
             <b-col class="mt-4 mx-0 col-lg-2 p-0"
-              ><b-button type="reset" variant="danger" class="m-1">초기화</b-button>
+              ><b-button @click="myReset" variant="danger" class="m-1">초기화</b-button>
             </b-col>
           </b-row>
           <b-row>
@@ -62,7 +62,7 @@ export default {
   },
   created() {},
   methods: {
-    submit() {
+    mySubmit() {
       let plan = {
         userId: this.userId,
         subject: this.subject,
@@ -75,7 +75,10 @@ export default {
         .then(() => console.log(`success [${plan}]`))
         .catch(() => console.log("fail"));
     },
-    reset() {},
+    myReset() {
+      this.subject = "";
+      this.summary = "";
+    },
   },
   computed: {
     ...mapState(planStore, ["wishList"]),
