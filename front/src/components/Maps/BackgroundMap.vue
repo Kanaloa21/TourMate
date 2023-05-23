@@ -1,6 +1,21 @@
 <template>
-  <div>
-    <div id="map"></div>
+  <div class="position-relative">
+    <div id="map" class="position-absolute" style="z-index: 2"></div>
+    <b-form-group
+      label="Stacked (vertical) button-group style checkboxes"
+      v-slot="{ ariaDescribedby }"
+      class="position-absolute content-types"
+      style="z-index: 3"
+    >
+      <b-form-checkbox-group
+        v-cloak
+        v-model="selected"
+        :options="options"
+        :aria-describedby="ariaDescribedby"
+        stacked
+        buttons
+      ></b-form-checkbox-group>
+    </b-form-group>
   </div>
 </template>
 
@@ -16,6 +31,17 @@ export default {
       markers: [],
       infowindow: null,
       customOverlay: null,
+      selected: [12, 14, 15, 25, 28, 32, 38, 39],
+      options: [
+        { text: "관광지", value: 12 },
+        { text: "문화시설", value: 14 },
+        { text: "축제공연행사", value: 15 },
+        { text: "여행코스", value: 25 },
+        { text: "레포츠", value: 28 },
+        { text: "숙박", value: 32 },
+        { text: "쇼핑", value: 38 },
+        { text: "음식점", value: 39 },
+      ],
     };
   },
   mounted() {
@@ -66,7 +92,7 @@ export default {
       // const positions = markerPositions.map((position) => new kakao.maps.LatLng(...position));
 
       // 이미 마커가 있으면 삭제
-      if (this.markers.length > 0) {
+      if (this.markers && this.markers.length > 0) {
         this.markers.map((marker) => marker.setMap(null));
         this.markers = null;
       }
@@ -101,13 +127,22 @@ export default {
       this.customOverlay.setMap(null);
     },
     ...mapActions(attractionStore, ["searchAttractionList"]),
-    ...mapMutations(attractionStore, ["SET_MAP_CENTER_POS"]),
+    ...mapMutations(attractionStore, [
+      "SET_MAP_CENTER_POS",
+      "SET_FILTERED_ATTRACTION_LIST",
+      "SET_SELECTED",
+    ]),
   },
   computed: {
     ...mapState(attractionStore, ["attractionList", "mapCenterPos", "mapFocusAttractionInfo"]),
     ...mapGetters(attractionStore, ["top10Attractions"]),
   },
   watch: {
+    selected() {
+      this.SET_SELECTED(this.selected);
+      this.SET_FILTERED_ATTRACTION_LIST();
+      this.drawMapByList();
+    },
     attractionList() {
       console.log("watched attractionList");
       this.drawMapByList();
@@ -181,5 +216,10 @@ export default {
 #map {
   width: 100vw;
   height: 100vh;
+}
+
+.content-types {
+  width: 100px;
+  left: 500px;
 }
 </style>
