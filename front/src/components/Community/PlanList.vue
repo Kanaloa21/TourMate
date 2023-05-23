@@ -39,10 +39,10 @@ export default {
     this.getWishList(tmp);
   },
   methods: {
-    viewPlanDetail(article) {
+    viewPlanDetail(plan) {
       this.$router.push({
-        name: "planview",
-        params: { articleno: article.articleno },
+        name: "planView",
+        params: { planId: plan.planId },
       });
     },
     ...mapActions(planStore, ["getWishList"]),

@@ -5,6 +5,7 @@ const planStore = {
   state: {
     wishList: [],
     planList: [],
+    planDetail: null,
   },
   getters: {},
   mutations: {
@@ -25,15 +26,25 @@ const planStore = {
     GET_PLAN_LIST(state, data) {
       state.planList = data;
     },
+    GET_PLAN_DETAIL(state, data) {
+      state.planList = data;
+    },
   },
   actions: {
     getWishList({ commit }, payload) {
       let uri = "/plan?sortType=" + payload.sortType;
-
       console.log(uri);
       http.get(uri).then(({ data }) => {
         console.log("data", data);
         commit("GET_PLAN_LIST", data);
+      });
+    },
+    getPlanDetail({ commit }, payload) {
+      let uri = "/plan/detail?planId=" + payload.planId + "&userId=" + payload.userId;
+      console.log(uri);
+      http.get(uri).then(({ data }) => {
+        console.log("data", data);
+        commit("GET_PLAN_DETAIL", data);
       });
     },
   },

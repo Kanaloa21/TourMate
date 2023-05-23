@@ -67,10 +67,10 @@ const routes = [
     children: [
       {
         path: "view/:planId",
-        name: "planview",
-        beforeEnter: onlyAuthUser,
-        // component: () =>
-        //   import(/* webpackChunkName: "community" */ "@/components/community/BoardDetail"),
+        name: "planView",
+        // beforeEnter: onlyAuthUser,
+        component: () =>
+          import(/* webpackChunkName: "community" */ "@/components/community/PlanView"),
       },
     ],
   },
@@ -78,6 +78,7 @@ const routes = [
     path: "/user",
     name: "user",
     component: UserView,
+    beforeEnter: onlyAuthUser,
     children: [
       {
         path: "login",
