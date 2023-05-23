@@ -10,6 +10,14 @@ const userStore = {
     accessToken: null,
     refreshToken: null,
   },
+  getters: {
+    checkIsLogin(state) {
+      return state.isLogin;
+    },
+    checkIsValidToken(state) {
+      return state.isValidToken;
+    },
+  },
   actions: {
     // 로그인
     async userConfirm({ state }, user) {
@@ -36,6 +44,7 @@ const userStore = {
 
     // 토큰 검증
     async checkUserAuth({ state, dispatch }, token) {
+      console.log("토큰 검증 시작");
       await checkAuth(
         token,
         ({ data }) => {
