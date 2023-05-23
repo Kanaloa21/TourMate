@@ -4,7 +4,8 @@
     <!-- <h1>This is an PlansView page</h1> -->
     <div class="position-relative bb">
       <plan-map class="position-absolute anime-map" />
-      <wish-list class="position-absolute side-list" style="z-index: 2" />
+      <wish-list class="position-absolute side-list" style="z-index: 3" />
+      <plan-write class="position-absolute anime-map" style="z-index: 2" />
     </div>
   </div>
 </template>
@@ -13,10 +14,11 @@
 import SidebarNav from "@/components/SidebarNav.vue";
 import WishList from "@/components/Plans/WishList.vue";
 import PlanMap from "@/components/Plans/PlanMap.vue";
+import PlanWrite from "@/components/Plans/PlanWrite.vue";
 
 export default {
   name: "PlansView",
-  components: { SidebarNav, WishList, PlanMap },
+  components: { SidebarNav, WishList, PlanMap, PlanWrite },
   data() {
     return {
       message: "",
