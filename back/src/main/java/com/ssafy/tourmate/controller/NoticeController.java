@@ -84,7 +84,7 @@ public class NoticeController {
 	
 	@ApiOperation(value = "공지사항 삭제", notes = "공지사항을 삭제한다, 삭제에 성공하면 success를, 실패하면 fail을 반환한다", response = String.class)
 	@DeleteMapping("/admin/{noticeId}")
-	public ResponseEntity<String> modifyNotice(@PathVariable("noticeId") @ApiParam("공지사항 Id 번호") int noticeId) {
+	public ResponseEntity<String> removeNotice(@PathVariable("noticeId") @ApiParam("공지사항 Id 번호") int noticeId) {
 		
 		String msg = SUCCESS;
 		
