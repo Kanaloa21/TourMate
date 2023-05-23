@@ -4,19 +4,19 @@
     <!-- <h1>This is an PlansView page</h1> -->
     <div class="position-relative bb">
       <plan-map class="position-absolute anime-map" />
-      <bookmark-list class="position-absolute side-list" style="z-index: 2" />
+      <wish-list class="position-absolute side-list" style="z-index: 2" />
     </div>
   </div>
 </template>
 
 <script>
 import SidebarNav from "@/components/SidebarNav.vue";
-import BookmarkList from "@/components/Plans/BookmarkList.vue";
+import WishList from "@/components/Plans/WishList.vue";
 import PlanMap from "@/components/Plans/PlanMap.vue";
 
 export default {
   name: "PlansView",
-  components: { SidebarNav, BookmarkList, PlanMap },
+  components: { SidebarNav, WishList, PlanMap },
   data() {
     return {
       message: "",

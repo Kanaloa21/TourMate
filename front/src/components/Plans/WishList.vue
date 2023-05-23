@@ -61,7 +61,7 @@ import draggable from "vuedraggable";
 const planStore = "planStore";
 
 export default {
-  name: "BookmarkList",
+  name: "WishList",
   components: { draggable },
   data() {
     return {
