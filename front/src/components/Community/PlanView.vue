@@ -11,7 +11,7 @@ import { mapState } from "vuex";
 import userStore from "@/store/modules/userStore";
 
 export default {
-  name: "",
+  name: "PlanView",
   components: {},
   data() {
     return {

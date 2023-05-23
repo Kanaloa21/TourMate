@@ -96,7 +96,7 @@ const routes = [
         name: "planView",
         // beforeEnter: onlyAuthUser,
         component: () =>
-          import(/* webpackChunkName: "community" */ "@/components/community/PlanView"),
+          import(/* webpackChunkName: "community" */ "@/components/Community/PlanView"),
       },
     ],
   },
