@@ -9,7 +9,11 @@ const planStore = {
   getters: {},
   mutations: {
     ADD_WISH_LIST(state, data) {
-      state.wishList.push(data);
+      let isAlreadyExist = state.wishList.some(({ contentId }) => {
+        return contentId == data.contentId;
+      });
+      if (isAlreadyExist) console.log("This attration already exists");
+      else state.wishList.push(data);
     },
     CLEAR_WISH_LIST(state) {
       state.wishList = [];
