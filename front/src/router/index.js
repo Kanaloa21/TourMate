@@ -54,6 +54,32 @@ const routes = [
     path: "/notice",
     name: "notice",
     component: NoticeView,
+    redirect: "/notice/list",
+    children: [
+      {
+        path: "list",
+        name: "noticeList",
+        component: () => import(/* webpackChunkName: "notice" */ "@/components/Notice/NoticeList"),
+      },
+      {
+        path: "view",
+        name: "noticeView",
+        component: () => import(/* webpackChunkName: "notice" */ "@/components/Notice/NoticeView"),
+      },
+      {
+        path: "write",
+        name: "noticeWrite",
+        beforeEnter: onlyAuthUser,
+        component: () => import(/* webpackChunkName: "notice" */ "@/components/Notice/NoticeWrite"),
+      },
+      {
+        path: "modify",
+        name: "noticeModify",
+        beforeEnter: onlyAuthUser,
+        component: () =>
+          import(/* webpackChunkName: "notice" */ "@/components/Notice/NoticeModify"),
+      },
+    ],
   },
   {
     path: "/plans",

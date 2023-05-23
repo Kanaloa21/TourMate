@@ -7,6 +7,7 @@ const userStore = {
     isValidToken: false,
     userId: null,
     userName: null,
+    authorizeLevel: 0,
     accessToken: null,
     refreshToken: null,
   },
@@ -16,6 +17,9 @@ const userStore = {
     },
     checkIsValidToken(state) {
       return state.isValidToken;
+    },
+    checkAuthorizeLevel(state) {
+      return state.authorizeLevel;
     },
   },
   actions: {
@@ -30,6 +34,7 @@ const userStore = {
             state.userId = data.loginInfo.userId;
             state.userName = data.loginInfo.userName;
             state.isLogin = true;
+            state.authorizeLevel = data.loginInfo.authorizeLevel;
           } else {
             // 로그인 실패, 아이디 혹은 비밀번호가 틀림
           }
@@ -89,6 +94,7 @@ const userStore = {
             state.userId = null;
             state.userName = null;
             state.isLogin = false;
+            state.authorizeLevel = 0;
             console.log("로그아웃 완료");
           },
           (error) => {
