@@ -1,15 +1,20 @@
 <template>
   <div>
     <sidebar-nav></sidebar-nav>
-    <h1>This is an NoticeView page</h1>
+    <avatar-dropdown></avatar-dropdown>
+    <div>
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
 import SidebarNav from "@/components/SidebarNav.vue";
+import AvatarDropdown from "@/components/User/AvatarDropdown.vue";
+
 export default {
   name: "NoticeView",
-  components: { SidebarNav },
+  components: { SidebarNav, AvatarDropdown },
   data() {
     return {
       message: "",
