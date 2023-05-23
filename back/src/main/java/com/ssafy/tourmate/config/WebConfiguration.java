@@ -25,13 +25,13 @@ public class WebConfiguration implements WebMvcConfigurer {
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
 
-	@Autowired
-	private JwtInterceptor jwtInterceptor;
-
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(jwtInterceptor)
-			.addPathPatterns("/**/notice/admin/**");
-	}
+//	@Autowired
+//	private JwtInterceptor jwtInterceptor;
+//
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(jwtInterceptor)
+//			.addPathPatterns("/**/notice/admin/**");
+//	}
 
 }
