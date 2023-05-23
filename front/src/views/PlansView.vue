@@ -5,7 +5,7 @@
     <div class="position-relative bb">
       <plan-map class="position-absolute anime-map" />
       <wish-list class="position-absolute side-list" style="z-index: 3" />
-      <plan-write class="position-absolute anime-map" style="z-index: 2" />
+      <plan-write class="position-absolute anime-write" style="z-index: 2" />
     </div>
   </div>
 </template>
@@ -58,6 +58,21 @@ export default {
   }
   to {
     opacity: 1;
+  }
+}
+
+.anime-write {
+  animation: anime-load var(--list-load-time) cubic-bezier(0.13, 0.63, 0.62, 1.37);
+}
+
+@keyframes anime-load {
+  from {
+    opacity: 0;
+    transform: translateY(150%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0%);
   }
 }
 </style>

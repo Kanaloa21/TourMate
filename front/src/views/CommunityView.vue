@@ -1,18 +1,16 @@
 <template>
   <div>
     <sidebar-nav></sidebar-nav>
-    <h1>This is an CommunityView page</h1>
-    <plan-list></plan-list>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import SidebarNav from "@/components/SidebarNav.vue";
-import PlanList from "@/components/Community/PlanList.vue";
 
 export default {
   name: "CommunityView",
-  components: { SidebarNav, PlanList },
+  components: { SidebarNav },
   data() {
     return {
       message: "",

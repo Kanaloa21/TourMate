@@ -5,7 +5,6 @@ import MapsView from "../views/MapsView.vue";
 import MyPageView from "../views/MyPageView.vue";
 import NoticeView from "../views/NoticeView.vue";
 import PlansView from "../views/PlansView.vue";
-import CommunityView from "../views/CommunityView.vue";
 import UserView from "../views/UserView";
 
 Vue.use(VueRouter);
@@ -89,12 +88,19 @@ const routes = [
   {
     path: "/community",
     name: "community",
-    component: CommunityView,
+    component: () => import(/* webpackChunkName: "community" */ "@/views/CommunityView"),
+    redirect: "/community/list",
     children: [
+      {
+        path: "list",
+        name: "planList",
+        component: () =>
+          import(/* webpackChunkName: "community" */ "@/components/Community/PlanList"),
+      },
       {
         path: "view/:planId",
         name: "planView",
-        // beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAuthUser,
         component: () =>
           import(/* webpackChunkName: "community" */ "@/components/Community/PlanView"),
       },
@@ -104,7 +110,6 @@ const routes = [
     path: "/user",
     name: "user",
     component: UserView,
-    beforeEnter: onlyAuthUser,
     children: [
       {
         path: "login",

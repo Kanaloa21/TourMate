@@ -10,7 +10,7 @@ import { mapState } from "vuex";
 const planStore = "planStore";
 
 export default {
-  name: "BackgroundMap",
+  name: "PlanMap",
   data() {
     return {
       markers: [],
