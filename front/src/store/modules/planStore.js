@@ -27,7 +27,7 @@ const planStore = {
       state.planList = data;
     },
     GET_PLAN_DETAIL(state, data) {
-      state.planList = data;
+      state.planDetail = data;
     },
   },
   actions: {
@@ -40,7 +40,10 @@ const planStore = {
       });
     },
     getPlanDetail({ commit }, payload) {
-      let uri = "/plan/detail?planId=" + payload.planId + "&userId=" + payload.userId;
+      let uri = "/plan/detail?planId=" + payload.planId;
+      if (payload.userId != null) {
+        uri = uri + "&userId=" + payload.userId;
+      }
       console.log(uri);
       http.get(uri).then(({ data }) => {
         console.log("data", data);

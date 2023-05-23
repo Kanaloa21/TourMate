@@ -50,7 +50,7 @@ export default {
     },
 
     drawMapByList() {
-      const positions = this.wishList.map(
+      const positions = this.planDetail.planAttractions.map(
         ({ latitude, longitude }) => new kakao.maps.LatLng(latitude, longitude)
       );
       console.log(positions);
@@ -91,7 +91,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(planStore, ["wishList"]),
+    ...mapState(planStore, ["planDetail"]),
   },
   watch: {
     wishList() {

@@ -2,20 +2,16 @@
   <div class="px-4 list bb scroll" style="overflow-y: scroll">
     <div>
       <h3 class="mt-3" style="color: white; font-weight: bold">{{ userId }}의 북마크</h3>
-      <b-button href="#" variant="danger" class="mx-1" @click="clearPlan()"> 비우기 </b-button>
     </div>
     <hr />
     <div>
       <div
         class="list-group-item"
-        v-for="element in planList.planAttractions"
+        v-for="element in planDetail.planAttractions"
         :key="element.contentId"
         style="color: black"
       >
         {{ element.title }}
-        <b-button href="#" variant="warning" class="mx-1" @click="deletePlan(element.contentId)">
-          삭제
-        </b-button>
       </div>
     </div>
   </div>
@@ -41,7 +37,7 @@ export default {
   mounted() {},
   methods: {},
   computed: {
-    ...mapState(planStore, ["planList"]),
+    ...mapState(planStore, ["planDetail"]),
   },
 };
 </script>

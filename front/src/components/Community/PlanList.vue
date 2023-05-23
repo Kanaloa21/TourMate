@@ -19,6 +19,7 @@
 import { mapActions, mapState } from "vuex";
 
 const planStore = "planStore";
+const userStore = "userStore";
 
 export default {
   name: "BoardList",
@@ -33,22 +34,34 @@ export default {
       ],
     };
   },
-  created() {},
-  mounted() {
+  created() {
     const tmp = { sortType: 0 };
     this.getWishList(tmp);
   },
+  mounted() {},
   methods: {
     viewPlanDetail(plan) {
+      let params = {
+        planId: plan.planId,
+      };
+      if (this.userId != null) {
+        params = {
+          userId: plan.userId,
+          planId: plan.planId,
+        };
+      }
+
+      this.getPlanDetail(params);
       this.$router.push({
         name: "planView",
         params: { planId: plan.planId },
       });
     },
-    ...mapActions(planStore, ["getWishList"]),
+    ...mapActions(planStore, ["getWishList", "getPlanDetail"]),
   },
   computed: {
     ...mapState(planStore, ["planList"]),
+    ...mapState(userStore, ["userId"]),
   },
 };
 </script>
