@@ -45,12 +45,31 @@ const attractionStore = {
       if (payload.keyword != null) {
         uri = uri + "&keyword=" + payload.keyword;
       }
+      if (payload.userId != null) {
+        uri = uri + "&userId=" + payload.userId;
+      }
 
       console.log(uri);
       http.get(uri).then(({ data }) => {
         console.log("data", data);
         commit("SEARCH_ATTRACTION_LIST", data);
       });
+    },
+
+    async updateLiked({ commit }, payload) {
+      console.log("좋아요 갱신 데이터", payload);
+      await http
+        .put(`/tour/like`, payload)
+        .then(({ data }) => {
+          if (data === "success") {
+            console.log("좋아요 갱신 성공!");
+          } else {
+            console.log(commit);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

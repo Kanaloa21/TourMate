@@ -43,7 +43,7 @@
             <b-button href="#" variant="success" class="mx-1" @click="showDetail(attraction)">
               위치 보기
             </b-button>
-            <b-button href="#" variant="info " class="mx-1"
+            <b-button href="#" variant="info" class="mx-1" @click="clickLike(attraction)"
               >Like {{ attraction.likeCount }}
             </b-button>
           </b-row>
@@ -61,6 +61,7 @@ import SelectGugun from "@/components/item/SelectGugun.vue";
 const attractionStore = "attractionStore";
 const itemStore = "itemStore";
 const planStore = "planStore";
+const userStore = "userStore";
 
 export default {
   name: "TourList",
@@ -84,9 +85,26 @@ export default {
       this.SET_MAP_CENTER_POS(latlng);
       this.SET_MAP_FOCUS_ATTRACTION_INFO(attraction);
     },
+    async clickLike(attraction) {
+      if (!this.userId) {
+        alert("로그인 후 좋아요가 가능합니다");
+        return;
+      }
 
+      const param = {
+        id: attraction.contentId,
+        userId: this.userId,
+      };
+      await this.updateLiked(param);
+      this.submit();
+    },
     submit() {
-      let params = { sidoCode: this.sidoCode, gugunCode: this.gugunCode, keyword: this.keyword };
+      let params = {
+        sidoCode: this.sidoCode,
+        gugunCode: this.gugunCode,
+        keyword: this.keyword,
+        userId: this.userId,
+      };
       this.searchAttractionList(params);
     },
 
@@ -99,7 +117,7 @@ export default {
       this.gugunCode = gugunCode;
     },
 
-    ...mapActions(attractionStore, ["searchAttractionList"]),
+    ...mapActions(attractionStore, ["searchAttractionList", "updateLiked"]),
     ...mapMutations(attractionStore, ["SET_MAP_CENTER_POS", "SET_MAP_FOCUS_ATTRACTION_INFO"]),
     ...mapActions(itemStore, ["getGugun"]),
     ...mapMutations(itemStore, ["CLEAR_GUGUN_LIST"]),
@@ -108,6 +126,7 @@ export default {
 
   computed: {
     ...mapState(attractionStore, ["attractionList"]),
+    ...mapState(userStore, ["userId"]),
     ...mapGetters(attractionStore, ["top10Attractions"]),
   },
 };
