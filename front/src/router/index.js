@@ -14,12 +14,17 @@ import store from "@/store";
 
 const onlyAuthUser = async (to, from, next) => {
   console.log("로그인 전 토큰 체크");
+  const isLogin = store.getters["userStore/checkIsLogin"];
 
-  if (store.state.isLogin) {
+  if (isLogin) {
+    console.log("토큰 검증 요청");
     await store.dispatch("userStore/checkUserAuth", store.state.accessToken);
   }
+  console.log("토큰 검증 완료");
 
-  if (!store.state.isLogin || !store.state.isValidToken) {
+  const isValidToken = store.getters["userStore/checkIsValidToken"];
+
+  if (!isLogin || !isValidToken) {
     alert("로그인이 필요한 페이지입니다..");
     // next({ name: "login" });
     router.push({ name: "login" });
