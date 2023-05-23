@@ -7,10 +7,12 @@ const attractionStore = {
     mapCenterPos: { lat: 36.355, lng: 127.2991 },
     mapFocusAttractionInfo: null,
     attractionNodeList: [],
+    filteredAttractionList: [],
+    selected: [12, 14, 15, 25, 28, 32, 38, 39],
   },
   getters: {
     top10Attractions(state) {
-      return state.attractionList.slice(0, 10);
+      return state.filteredAttractionList;
     },
   },
   mutations: {
@@ -18,7 +20,17 @@ const attractionStore = {
       state.attractionList = null;
     },
     SEARCH_ATTRACTION_LIST(state, data) {
-      state.attractionList = data;
+      state.attractionList = [...data];
+      state.filteredAttractionList = [...data];
+    },
+    SET_FILTERED_ATTRACTION_LIST(state) {
+      console.log(state.selected);
+      state.filteredAttractionList = state.attractionList.filter((data) =>
+        state.selected.includes(data.contentType)
+      );
+    },
+    SET_SELECTED(state, data) {
+      state.selected = data;
     },
     SET_MAP_CENTER_POS(state, data) {
       state.mapCenterPos = data;

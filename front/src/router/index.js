@@ -104,7 +104,6 @@ const routes = [
     path: "/user",
     name: "user",
     component: UserView,
-    beforeEnter: onlyAuthUser,
     children: [
       {
         path: "login",
