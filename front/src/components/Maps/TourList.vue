@@ -1,5 +1,9 @@
 <template>
-  <div class="px-4 list bb scroll" style="overflow-y: scroll">
+  <div
+    class="px-4 list bb scroll"
+    style="overflow-y: scroll"
+    @scroll="handleNotificationListScroll"
+  >
     <!-- <b-button class="position-absolute sidebar-toggle" style="z-index: 3">&#60;</b-button> -->
     <div>
       <b-row class="mt-3">
@@ -75,6 +79,22 @@ export default {
   },
   created() {},
   methods: {
+    handleNotificationListScroll(e) {
+      const { scrollHeight, scrollTop, clientHeight } = e.target;
+      const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
+      // 일정 이상 밑으로 내려오면 함수 실행 / 반복된 호출을 막기위해 1초마다 스크롤 감지 후 실행
+      if (isAtTheBottom) {
+        setTimeout(() => this.handleLoadMore(), 1000);
+      }
+    },
+
+    // 내려오면 api를 호출하여 아래에 더 추가,
+    handleLoadMore() {
+      console.log("리스트 추가");
+      this.SET_PAGING(this.paging + 1);
+      this.SET_FILTERED_ATTRACTION_LIST();
+      // api를 호출하여 리스트 추가하면 됨, 현재는 pushList에 1개의 index 추가
+    },
     addPlan(attraction) {
       this.ADD_WISH_LIST(attraction);
     },
@@ -96,9 +116,17 @@ export default {
         userId: this.userId,
       };
       await this.updateLiked(param);
-      this.submit();
+
+      let params = {
+        sidoCode: this.sidoCode,
+        gugunCode: this.gugunCode,
+        keyword: this.keyword,
+        userId: this.userId,
+      };
+      this.searchAttractionList(params);
     },
     submit() {
+      this.SET_PAGING(1);
       let params = {
         sidoCode: this.sidoCode,
         gugunCode: this.gugunCode,
@@ -118,14 +146,19 @@ export default {
     },
 
     ...mapActions(attractionStore, ["searchAttractionList", "updateLiked"]),
-    ...mapMutations(attractionStore, ["SET_MAP_CENTER_POS", "SET_MAP_FOCUS_ATTRACTION_INFO"]),
+    ...mapMutations(attractionStore, [
+      "SET_MAP_CENTER_POS",
+      "SET_MAP_FOCUS_ATTRACTION_INFO",
+      "SET_PAGING",
+      "SET_FILTERED_ATTRACTION_LIST",
+    ]),
     ...mapActions(itemStore, ["getGugun"]),
     ...mapMutations(itemStore, ["CLEAR_GUGUN_LIST"]),
     ...mapMutations(planStore, ["ADD_WISH_LIST"]),
   },
 
   computed: {
-    ...mapState(attractionStore, ["attractionList"]),
+    ...mapState(attractionStore, ["attractionList", "paging"]),
     ...mapState(userStore, ["userId"]),
     ...mapGetters(attractionStore, ["top10Attractions"]),
   },
