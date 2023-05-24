@@ -4,7 +4,7 @@
       <h3 class="mt-3" style="color: white; font-weight: bold">{{ userId }}의 북마크</h3>
     </div>
     <hr />
-    <div>
+    <div v-if="planDetail != null">
       <div
         class="list-group-item"
         v-for="element in planDetail.planAttractions"

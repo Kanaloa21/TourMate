@@ -16,6 +16,7 @@ export default {
       markers: [],
       infowindow: null,
       customOverlay: null,
+      polylines: null,
     };
   },
   mounted() {
@@ -40,6 +41,7 @@ export default {
 
       this.map = new kakao.maps.Map(container, options);
       this.drawMapByList();
+      this.drawPolylines();
     },
 
     changeSize(size) {
@@ -89,6 +91,31 @@ export default {
     closeOverlay() {
       this.customOverlay.setMap(null);
     },
+
+    drawPolylines() {
+      this.deletePolyline();
+
+      const linePath = this.wishList.map(
+        ({ latitude, longitude }) => new kakao.maps.LatLng(latitude, longitude)
+      );
+
+      this.polyline = new kakao.maps.Polyline({
+        path: linePath, // 선을 구성하는 좌표배열 입니다
+        strokeWeight: 4, // 선의 두께 입니다
+        strokeColor: "#db4040", // 선의 색깔입니다
+        strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeStyle: "solid", // 선의 스타일입니다
+      });
+
+      this.polyline.setMap(this.map);
+    },
+
+    deletePolyline() {
+      if (this.polyline) {
+        this.polyline.setMap(null);
+        this.polyline = null;
+      }
+    },
   },
   computed: {
     ...mapState(planStore, ["wishList"]),
@@ -96,6 +123,7 @@ export default {
   watch: {
     wishList() {
       this.drawMapByList();
+      this.drawPolylines();
     },
     // attractionList() {
     //   console.log("watched attractionList");

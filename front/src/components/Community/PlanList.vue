@@ -41,23 +41,12 @@ export default {
   mounted() {},
   methods: {
     viewPlanDetail(plan) {
-      let params = {
-        planId: plan.planId,
-      };
-      if (this.userId != null) {
-        params = {
-          userId: plan.userId,
-          planId: plan.planId,
-        };
-      }
-
-      this.getPlanDetail(params);
       this.$router.push({
         name: "planView",
         params: { planId: plan.planId },
       });
     },
-    ...mapActions(planStore, ["getWishList", "getPlanDetail"]),
+    ...mapActions(planStore, ["getWishList"]),
   },
   computed: {
     ...mapState(planStore, ["planList"]),

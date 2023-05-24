@@ -12,10 +12,11 @@
 
 <script>
 // import http from "@/api/index";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import DetailMapVue from "./Detail/DetailMap.vue";
 import DetailList from "./Detail/DetailList.vue";
 
+const planStore = "planStore";
 const userStore = "userStore";
 
 export default {
@@ -29,8 +30,20 @@ export default {
   },
   created() {
     this.planId = this.$route.params.planId;
+    let params = {
+      planId: this.planId,
+    };
+    if (this.userId != null) {
+      params = {
+        userId: this.userId,
+        planId: this.planId,
+      };
+    }
+    this.getPlanDetail(params);
   },
-  methods: {},
+  methods: {
+    ...mapActions(planStore, ["getPlanDetail"]),
+  },
   computed: {
     ...mapState(userStore, ["userId"]),
   },

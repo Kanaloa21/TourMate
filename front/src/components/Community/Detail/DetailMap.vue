@@ -16,6 +16,7 @@ export default {
       markers: [],
       infowindow: null,
       customOverlay: null,
+      polyline: null,
     };
   },
   mounted() {
@@ -40,6 +41,7 @@ export default {
 
       this.map = new kakao.maps.Map(container, options);
       this.drawMapByList();
+      this.drawPolylines();
     },
 
     changeSize(size) {
@@ -50,12 +52,14 @@ export default {
     },
 
     drawMapByList() {
-      const positions = this.planDetail.planAttractions.map(
-        ({ latitude, longitude }) => new kakao.maps.LatLng(latitude, longitude)
-      );
-      console.log(positions);
+      if (this.planDetail != null && this.planDetail.planAttractions != null) {
+        const positions = this.planDetail.planAttractions.map(
+          ({ latitude, longitude }) => new kakao.maps.LatLng(latitude, longitude)
+        );
+        console.log(positions);
 
-      this.displayMarker(positions);
+        this.displayMarker(positions);
+      }
     },
 
     displayMarker(positions) {
@@ -89,14 +93,36 @@ export default {
     closeOverlay() {
       this.customOverlay.setMap(null);
     },
+
+    drawPolylines() {
+      this.deletePolyline();
+
+      const linePath = this.planDetail.planAttractions.map(
+        ({ latitude, longitude }) => new kakao.maps.LatLng(latitude, longitude)
+      );
+
+      this.polyline = new kakao.maps.Polyline({
+        path: linePath, // 선을 구성하는 좌표배열 입니다
+        strokeWeight: 4, // 선의 두께 입니다
+        strokeColor: "#db4040", // 선의 색깔입니다
+        strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeStyle: "solid", // 선의 스타일입니다
+      });
+
+      this.polyline.setMap(this.map);
+    },
+
+    deletePolyline() {
+      if (this.polyline) {
+        this.polyline.setMap(null);
+        this.polyline = null;
+      }
+    },
   },
   computed: {
     ...mapState(planStore, ["planDetail"]),
   },
   watch: {
-    wishList() {
-      this.drawMapByList();
-    },
     // attractionList() {
     //   console.log("watched attractionList");
     //   this.drawMapByList();
