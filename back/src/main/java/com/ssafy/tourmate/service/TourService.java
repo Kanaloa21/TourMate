@@ -20,8 +20,8 @@ public class TourService {
 		this.tourMapper = mapper;
 	}
 
-	public List<TourDto> getTourList(int sidoCode, int gugunCode, String keyword) {
-		return tourMapper.selectList(sidoCode, gugunCode, keyword);
+	public List<TourDto> getTourList(int sidoCode, int gugunCode, String keyword, String userId) {
+		return tourMapper.selectList(sidoCode, gugunCode, keyword, userId);
 	}
 
 	public TourDto getTourDetail(int contentId, String userId) {
@@ -32,13 +32,14 @@ public class TourService {
 		return dto;
 	}
 
-	public int createLike(int contentId, String userId) {
-		return tourMapper.createLike(contentId, userId);
+	public int updateLike(int contentId, String userId) {
+		if (tourMapper.isLiked(contentId, userId) == 0) {
+			return tourMapper.createLike(contentId, userId);
+		} else {
+			return tourMapper.deleteLike(contentId, userId);
+		}
 	}
 	
-	public int deleteLike(int contentId, String userId) {
-		return tourMapper.deleteLike(contentId, userId);
-	}
 
 	public List<GugunDto> getGugunList(int sidoCode) {
 		return tourMapper.selectGugunList(sidoCode);

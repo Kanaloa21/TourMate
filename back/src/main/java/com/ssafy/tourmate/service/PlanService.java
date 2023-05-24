@@ -63,7 +63,6 @@ public class PlanService {
 	}
 
 	public int removePlan(int planId) {
-		
 		planMapper.deletePlanAttractions(planId);
 		planMapper.deleteBookmark(planId, null);
 		planMapper.deleteLike(planId, null);
@@ -72,16 +71,16 @@ public class PlanService {
 		return result;
 	}
 
-	public int changePlanLike(int planId, boolean isLiked, String userId) {
-		if (isLiked) {
+	public int changePlanLike(int planId, String userId) {
+		if (planMapper.checkLiked(planId, userId) == 0) {
 			return planMapper.insertLike(planId, userId);
 		} else {
 			return planMapper.deleteLike(planId, userId);
 		}
 	}
 
-	public int changePlanBookmark(int planId, boolean isBookmarked, String userId) {
-		if (isBookmarked) {
+	public int changePlanBookmark(int planId, String userId) {
+		if (planMapper.checkBookmarked(planId, userId) == 0) {
 			return planMapper.insertBookmark(planId, userId);
 		} else {
 			return planMapper.deleteBookmark(planId, userId);

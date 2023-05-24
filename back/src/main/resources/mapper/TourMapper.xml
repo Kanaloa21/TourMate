@@ -5,13 +5,21 @@
 	<select id="selectList" resultType="com.ssafy.tourmate.dto.TourDto">
 	
 		SELECT 
-			CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE, ADDR1, ADDR2, LATITUDE, LONGITUDE, CNT_TB.CNT as likeCount
+			CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE, ADDR1, ADDR2, 
+			LATITUDE, LONGITUDE, CNT_TB.CNT as likeCount, CONTENT_TYPE_ID as contentType
+			<if test="userId != null">
+				, IF(USER_LIKE.LI IS NOT NULL, 1, 0) as liked
+			</if>
 		FROM
 			ATTRACTION_INFO AS A
 				LEFT JOIN (SELECT COUNT(CONTENT_ID) AS CNT, CONTENT_ID AS CI
 							FROM USER_ATTRACTION_LIKE
 							GROUP BY CONTENT_ID) AS CNT_TB
 				ON A.CONTENT_ID = CNT_TB.CI
+				<if test="userId != null">
+					LEFT JOIN (SELECT DISTINCT CONTENT_ID AS LI FROM USER_ATTRACTION_LIKE WHERE USER_ID LIKE #{userId}) AS USER_LIKE
+					ON A.CONTENT_ID = USER_LIKE.LI
+				</if>
 				
 		<if test="sidoCode > 0 or gugunCode > 0 or keyword != null ">
 			WHERE
@@ -38,7 +46,7 @@
 	<select id="selectDetail" resultType="com.ssafy.tourmate.dto.TourDto">
 		
 		SELECT 
-			CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE, ADDR1, ADDR2, LATITUDE, LONGITUDE, CNT_TB.CNT as likeCount
+			CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE, ADDR1, ADDR2, LATITUDE, LONGITUDE, CNT_TB.CNT as likeCount, CONTENT_TYPE_ID as contentType
 		FROM
 			ATTRACTION_INFO AS A
 				LEFT JOIN (SELECT COUNT(CONTENT_ID) AS CNT, CONTENT_ID AS CI
@@ -93,7 +101,7 @@
 	<delete id="deleteLike">
 	
 		DELETE FROM USER_ATTRACTION_LIKE
-		WHERE CONTENT_ID = ##{contentId} AND USER_ID LIKE #{userId}
+		WHERE CONTENT_ID = #{contentId} AND USER_ID LIKE #{userId}
 	
 	</delete>
 
