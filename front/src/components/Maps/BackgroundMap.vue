@@ -2,7 +2,6 @@
   <div class="position-relative">
     <div id="map" class="position-absolute" style="z-index: 2"></div>
     <b-form-group
-      label="Stacked (vertical) button-group style checkboxes"
       v-slot="{ ariaDescribedby }"
       class="position-absolute content-types"
       style="z-index: 3"
@@ -12,8 +11,9 @@
         v-model="selected"
         :options="options"
         :aria-describedby="ariaDescribedby"
-        stacked
+        size="sm"
         buttons
+        stacked
       ></b-form-checkbox-group>
     </b-form-group>
   </div>
@@ -42,6 +42,7 @@ export default {
         { text: "쇼핑", value: 38 },
         { text: "음식점", value: 39 },
       ],
+      selectedMarkerIndex: null,
     };
   },
   mounted() {
@@ -99,14 +100,15 @@ export default {
 
       //
       if (positions.length > 0) {
-        this.markers = positions.map(
-          (position) =>
-            new kakao.maps.Marker({
-              map: this.map,
-              position,
-              draggable: true,
-            })
-        );
+        this.markers = positions.map((position) => {
+          const marker = new kakao.maps.Marker({
+            map: this.map,
+            position,
+            draggable: false,
+          });
+
+          return marker;
+        });
 
         const bounds = positions.reduce(
           (bounds, latlng) => bounds.extend(latlng),
@@ -126,11 +128,13 @@ export default {
     closeOverlay() {
       this.customOverlay.setMap(null);
     },
+
     ...mapActions(attractionStore, ["searchAttractionList"]),
     ...mapMutations(attractionStore, [
       "SET_MAP_CENTER_POS",
       "SET_FILTERED_ATTRACTION_LIST",
       "SET_SELECTED",
+      "SET_MAP_FOCUS_ATTRACTION_INFO",
     ]),
   },
   computed: {
@@ -202,7 +206,7 @@ export default {
                       <a href="${imageURL}" target="_blank" class="link">사진 확대</a></div>
                 </div>
             </div>
-        </div>   
+        </div>
     </div>`;
       let position = new kakao.maps.LatLng(this.mapCenterPos.lat, this.mapCenterPos.lng);
       this.customOverlay = new kakao.maps.CustomOverlay({
@@ -225,6 +229,7 @@ export default {
 
 .content-types {
   width: 100px;
-  left: 500px;
+  left: 520px;
+  top: 20px;
 }
 </style>
