@@ -123,6 +123,14 @@ export default {
     ...mapState(planStore, ["planDetail"]),
   },
   watch: {
+    // wishList() {
+    //   this.drawMapByList();
+    //   // this.drawPolylines();
+    // },
+    planDetail() {
+      this.drawMapByList();
+      this.drawPolylines();
+    },
     // attractionList() {
     //   console.log("watched attractionList");
     //   this.drawMapByList();
