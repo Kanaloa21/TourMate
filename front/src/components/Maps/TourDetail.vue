@@ -18,7 +18,24 @@ export default {
     return {};
   },
   created() {},
-  methods: {},
+  methods: {
+    handleNotificationListScroll(e) {
+      const { scrollHeight, scrollTop, clientHeight } = e.target;
+      const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
+      // 일정 이상 밑으로 내려오면 함수 실행 / 반복된 호출을 막기위해 1초마다 스크롤 감지 후 실행
+      if (isAtTheBottom) {
+        setTimeout(() => this.handleLoadMore(), 1000);
+      }
+    },
+
+    // 내려오면 api를 호출하여 아래에 더 추가,
+    handleLoadMore() {
+      console.log("리스트 추가");
+      this.SET_PAGING(this.paging + 1);
+      this.SET_FILTERED_ATTRACTION_LIST();
+      // api를 호출하여 리스트 추가하면 됨, 현재는 pushList에 1개의 index 추가
+    },
+  },
 
   computed: {},
 };
