@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.tourmate.dto.LikeDto;
 import com.ssafy.tourmate.dto.PlanDto;
 import com.ssafy.tourmate.service.PlanService;
 
@@ -120,15 +121,13 @@ public class PlanController {
 	
 	@PutMapping("/like")
 	public ResponseEntity<String> changePlanLike(
-			@RequestParam("planId") int planId, 
-			@RequestParam("isLiked") boolean isLiked,
-			@RequestParam("userId") String userId
+			@RequestBody @ApiParam("id : 플랜 id, userId : 유저 id") LikeDto dto
 	) {
 		String msg = "Success";
 		int result = 0;
 		
 
-		if (planService.changePlanLike(planId, isLiked, userId) == 0) {
+		if (planService.changePlanLike(dto.getId(), dto.getUserId()) == 0) {
 			msg = "Fail";
 		}
 		
@@ -138,15 +137,13 @@ public class PlanController {
 	// JWT 적용시 userID를 헤더에서 가져옴
 	@PutMapping("/bookmark")
 	public ResponseEntity<String> changePlanBookmark(
-			@RequestParam("planId") int planId, 
-			@RequestParam("isBookmarked") boolean isBookmarked,
-			@RequestParam("userId") String userId
+			@RequestBody @ApiParam("id : 플랜 id, userId : 유저 id") LikeDto dto
 	) {
 		String msg = "Success";
 		int result = 0;
 		
 
-		if (planService.changePlanBookmark(planId, isBookmarked, userId) == 0) {
+		if (planService.changePlanBookmark(dto.getId(), dto.getUserId()) == 0) {
 			msg = "Fail";
 		}
 		

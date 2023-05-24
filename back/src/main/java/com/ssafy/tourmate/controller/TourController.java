@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.tourmate.dto.GugunDto;
+import com.ssafy.tourmate.dto.LikeDto;
 import com.ssafy.tourmate.dto.SidoDto;
 import com.ssafy.tourmate.dto.TourDto;
 import com.ssafy.tourmate.service.TourService;
@@ -66,11 +68,13 @@ public class TourController {
 			@RequestParam(value = "gugunCode") @ApiParam(value = "구군 코드 (없을 시 0 입력)") 
 			int gugunCode,
 			@RequestParam(value = "keyword", required = false) @ApiParam(value = "검색 키워드", required = false) 
-			String keyword
+			String keyword,
+			@RequestParam(value = "userId", required = false) @ApiParam(value = "유저 아이디", required = false) 
+			String userId
 	) {
 		
-		logger.debug("관광지 검색 => 시도 {} 구군 {} 키워드 {}",sidoCode, gugunCode, keyword);
-		return new ResponseEntity<>(tourService.getTourList(sidoCode, gugunCode, keyword), HttpStatus.OK);
+		logger.debug("관광지 검색 => 시도 {} 구군 {} 키워드 {} 아이디 {}",sidoCode, gugunCode, keyword, userId);
+		return new ResponseEntity<>(tourService.getTourList(sidoCode, gugunCode, keyword, userId), HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "관광지 상세정보", notes = "관광지 정보를 가져온다.", response = TourDto.class)
@@ -89,35 +93,18 @@ public class TourController {
 			+ "\n만약 갱신이 성공하면 success를, 실패하면 fail을 전달한다.", response = String.class)
 	@PutMapping("/like")
 	public ResponseEntity<String> updateLike(
-			@PathVariable("contentId") @ApiParam("관광지 ID")
-			int contentId,
-			@PathVariable("userId") @ApiParam("유저 ID")
-			String userId,
-			@PathVariable("liked") @ApiParam("좋아요를 눌렀을 때는 true, 취소할 때는 false")
-			boolean isLiked
+			@RequestBody @ApiParam("id: 관광지 id, userId: 유저 id") LikeDto dto
 	) {
 		
 		logger.debug("좋아요 갱신");
 		String msg = SUCCESS;
 		HttpStatus status = HttpStatus.OK;
 		try {
-			if (isLiked) {
-				if (tourService.createLike(contentId, userId) == 1) {
-					logger.info("좋아요 성공");
-				} else {
-					logger.error("좋아요 실패");
-					msg = FAIL;
-				}
-			} else {
-				if(tourService.deleteLike(contentId, userId) == 1) {
-					logger.info("좋아요 취소 성공");
-				} else {
-					logger.info("좋아요 취소 실패");
-					msg = FAIL;
-				}
+			if (tourService.updateLike(dto.getId(), dto.getUserId()) == 1) {
+				logger.info("좋아요 갱신 성공!");
 			}
 		} catch (Exception e) {
-			logger.error("좋아요 에러 발생");
+			logger.error("좋아요 에러 발생 {}", e);
 			msg = FAIL;
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
