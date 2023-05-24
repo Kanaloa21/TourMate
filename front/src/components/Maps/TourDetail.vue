@@ -1,16 +1,21 @@
 <template>
-  <div
+  <b-container
+    v-if="showDetail"
     class="px-4 list bb scroll"
     style="overflow-y: scroll"
     @scroll="handleNotificationListScroll"
   >
+    <div c></div>
     <div><h1>title</h1></div>
     <hr />
     <div>내용입력</div>
-  </div>
+  </b-container>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
+const attractionStore = "attractionStore";
 export default {
   name: "TourDetail",
   components: {},
@@ -37,7 +42,9 @@ export default {
     },
   },
 
-  computed: {},
+  computed: {
+    ...mapGetters(attractionStore, ["showDetail"]),
+  },
 };
 </script>
 
