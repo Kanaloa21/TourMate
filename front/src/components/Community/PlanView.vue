@@ -5,7 +5,7 @@
       <h3 class="position-absolute">Plan ID: {{ planId }}</h3> -->
       <detail-map-vue class="position-absolute anime-map" />
       <detail-list :userId="userId" class="position-absolute side-list" style="z-index: 3" />
-      <!-- <plan-write class="position-absolute anime-write" style="z-index: 2" /> -->
+      <detail-content class="position-absolute anime-content" style="z-index: 2" />
     </div>
   </div>
 </template>
@@ -15,13 +15,14 @@
 import { mapState, mapActions } from "vuex";
 import DetailMapVue from "./Detail/DetailMap.vue";
 import DetailList from "./Detail/DetailList.vue";
+import DetailContent from "./Detail/DetailContent.vue";
 
 const planStore = "planStore";
 const userStore = "userStore";
 
 export default {
   name: "PlanView",
-  components: { DetailMapVue, DetailList },
+  components: { DetailMapVue, DetailList, DetailContent },
   data() {
     return {
       message: "asd",
@@ -51,4 +52,50 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.bb {
+  --list-load-time: 500ms;
+}
+.side-list {
+  animation: list-load var(--list-load-time) cubic-bezier(0.13, 0.63, 0.62, 1.37);
+}
+
+@keyframes list-load {
+  0% {
+    transform: translateX(-150%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+.anime-map {
+  animation: fadein 2s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.anime-content {
+  animation: anime-load var(--list-load-time) cubic-bezier(0.13, 0.63, 0.62, 1.37);
+}
+
+@keyframes anime-load {
+  from {
+    opacity: 0;
+    transform: translateY(-150%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+</style>

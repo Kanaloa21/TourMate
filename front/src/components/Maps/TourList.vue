@@ -38,7 +38,7 @@
           <b-row>
             <col class="mx-3" />
             <b-button href="#" variant="warning" class="mx-1" @click="addPlan(attraction)">
-              북마크
+              담기
             </b-button>
             <b-button href="#" variant="success" class="mx-1" @click="showDetail(attraction)">
               위치 보기
@@ -145,7 +145,7 @@ hr {
   bottom: 0;
   left: 80px;
   padding: 0px 0 0;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 25%), 0 2px 10px 0 rgb(0 0 0 / 25%);
   /* 최소 창 크기 500px (크롬기준) */
   width: 420px;
   height: 100vh;
