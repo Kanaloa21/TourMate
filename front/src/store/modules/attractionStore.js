@@ -10,10 +10,14 @@ const attractionStore = {
     filteredAttractionList: [],
     selected: [12, 14, 15, 25, 28, 32, 38, 39],
     paging: 1,
+    showDetail: false,
   },
   getters: {
     top10Attractions(state) {
       return state.filteredAttractionList;
+    },
+    showDetail(state) {
+      return state.showDetail;
     },
   },
   mutations: {
@@ -43,6 +47,10 @@ const attractionStore = {
     },
     SET_PAGING(state, data) {
       state.paging = data;
+    },
+
+    SET_SHOW_DETAIL(state, data) {
+      state.showDetail = data;
     },
   },
   actions: {

@@ -11,8 +11,19 @@
       <template #button-content>
         <b-icon icon="person-circle" class="h1 mb-0 icon"></b-icon>
       </template>
-      <b-dropdown-item href="#" @click="logout">로그아웃</b-dropdown-item>
-      <b-dropdown-item href="#" @click="mypage">마이페이지</b-dropdown-item>
+
+      <b-dropdown-header
+        ><h4>
+          {{ userName }}<br />
+          <h5>{{ userId }}</h5>
+        </h4></b-dropdown-header
+      >
+      <b-dropdown-item href="#" @click="logout"
+        ><b-icon class="mr-3" icon="power"></b-icon>로그아웃</b-dropdown-item
+      >
+      <b-dropdown-item href="#" @click="mypage"
+        ><b-icon class="mr-3" icon="bookmark-check"></b-icon>마이페이지</b-dropdown-item
+      >
     </b-dropdown>
 
     <b-dropdown
@@ -26,8 +37,12 @@
       <template #button-content>
         <b-icon icon="person-circle" class="h1 mb-0 icon"></b-icon>
       </template>
-      <b-dropdown-item href="#" @click="login">로그인</b-dropdown-item>
-      <b-dropdown-item href="#" @click="regist">회원가입</b-dropdown-item>
+      <b-dropdown-item href="#" @click="login"
+        ><b-icon class="mr-3" icon="power"></b-icon>로그인</b-dropdown-item
+      >
+      <b-dropdown-item href="#" @click="regist"
+        ><b-icon class="mr-3" icon="clipboard"></b-icon>회원가입</b-dropdown-item
+      >
     </b-dropdown>
   </div>
 </template>
