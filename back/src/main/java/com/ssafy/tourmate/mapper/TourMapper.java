@@ -11,7 +11,7 @@ import com.ssafy.tourmate.dto.TourDto;
 @Mapper
 public interface TourMapper {
 
-	List<TourDto> selectList(int sidoCode, int gugunCode, String keyword);
+	List<TourDto> selectList(int sidoCode, int gugunCode, String keyword, String userId);
 	
 	TourDto selectDetail(int contentId);
 

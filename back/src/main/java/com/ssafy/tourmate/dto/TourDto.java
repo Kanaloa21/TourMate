@@ -2,6 +2,7 @@ package com.ssafy.tourmate.dto;
 
 public class TourDto {
 	int contentId;
+	int contentType;
 	String imageURL;
 	String title;
 	String addr1;
@@ -9,16 +10,18 @@ public class TourDto {
 	double latitude;
 	double longitude;
 	int likeCount;
-	boolean isLiked;
+	boolean liked;
 
 	
 	public TourDto() {
 		super();
 	}
-	public TourDto(int contentId, String imageURL, String title, String addr1, String addr2, double latitude,
-			double longitude, int likeCount, boolean isLiked) {
+
+	public TourDto(int contentId, int contentType, String imageURL, String title, String addr1, String addr2,
+			double latitude, double longitude, int likeCount, boolean liked) {
 		super();
 		this.contentId = contentId;
+		this.contentType = contentType;
 		this.imageURL = imageURL;
 		this.title = title;
 		this.addr1 = addr1;
@@ -26,13 +29,21 @@ public class TourDto {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.likeCount = likeCount;
-		this.isLiked = isLiked;
+		this.liked = liked;
 	}
+
 	public int getContentId() {
 		return contentId;
 	}
 	public void setContentId(int contentId) {
 		this.contentId = contentId;
+	}
+	
+	public int getContentType() {
+		return contentType;
+	}
+	public void setContentType(int contentType) {
+		this.contentType = contentType;
 	}
 	public String getImageURL() {
 		return imageURL;
@@ -78,17 +89,17 @@ public class TourDto {
 		this.likeCount = likeCount;
 	}
 	
-	public boolean isLiked() {
-		return isLiked;
+	public boolean getLiked() {
+		return liked;
 	}
-	public void setLiked(boolean isLiked) {
-		this.isLiked = isLiked;
+	public void setLiked(boolean liked) {
+		this.liked = liked;
 	}
 	@Override
 	public String toString() {
 		return "TourDto [contentId=" + contentId + ", imageURL=" + imageURL + ", title=" + title + ", addr1=" + addr1
 				+ ", addr2=" + addr2 + ", latitude=" + latitude + ", longitude=" + longitude + ", likeCount="
-				+ likeCount + "isLiked=" + isLiked + "]";
+				+ likeCount + "isLiked=" + liked + "]";
 	}
 	
 }
