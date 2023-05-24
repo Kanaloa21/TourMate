@@ -20,4 +20,8 @@ async function logout(userId, success, fail) {
   await api.get(`/user/logout/${userId}`).then(success).catch(fail);
 }
 
-export { login, checkAuth, tokenRegeneration, logout };
+async function getInfo(userId, success, fail) {
+  await api.get(`/user/${userId}`).then(success).catch(fail);
+}
+
+export { login, checkAuth, tokenRegeneration, logout, getInfo };

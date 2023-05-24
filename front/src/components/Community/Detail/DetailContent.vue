@@ -1,6 +1,6 @@
 <template>
   <div class="write-area">
-    <b-row class="m-1">
+    <b-row class="m-1" v-if="planDetail != null">
       <b-col style="text-align: left">
         <b-form>
           <b-row class="mt-0">

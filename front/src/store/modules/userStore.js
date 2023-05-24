@@ -1,8 +1,9 @@
-import { login, checkAuth, logout, tokenRegeneration } from "@/api/user";
+import { login, checkAuth, logout, tokenRegeneration, getInfo } from "@/api/user";
 
 const userStore = {
   namespaced: true,
   state: {
+    userInfo: null,
     isLogin: false,
     isValidToken: false,
     userId: null,
@@ -96,6 +97,23 @@ const userStore = {
             state.isLogin = false;
             state.authorizeLevel = 0;
             console.log("로그아웃 완료");
+          },
+          (error) => {
+            console.log("서버 에러 발생", error);
+          }
+        );
+      }
+    },
+
+    // 유저 정보
+    async getUserInfo({ state }) {
+      if (state.isLogin) {
+        await getInfo(
+          state.userId,
+          ({ data }) => {
+            state.userInfo = data.userInfo;
+
+            console.log("내 정보 받기 완료: " + data.userInfo);
           },
           (error) => {
             console.log("서버 에러 발생", error);

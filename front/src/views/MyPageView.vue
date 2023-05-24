@@ -1,15 +1,17 @@
 <template>
   <div>
     <sidebar-nav></sidebar-nav>
-    <h1>This is an MyPageView page</h1>
+    <user-my-page></user-my-page>
   </div>
 </template>
 
 <script>
 import SidebarNav from "@/components/SidebarNav.vue";
+import UserMyPage from "@/components/User/UserMyPage.vue";
+
 export default {
   name: "MyPageView",
-  components: { SidebarNav },
+  components: { SidebarNav, UserMyPage },
   data() {
     return {
       message: "",
