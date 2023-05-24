@@ -127,7 +127,7 @@ export default {
 }
 @keyframes counter {
   100% {
-    --num: 100;
+    --num: 36181;
   }
 }
 
