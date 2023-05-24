@@ -10,7 +10,7 @@ import com.ssafy.tourmate.dto.PlanDto;
 @Mapper
 public interface PlanMapper {
 
-	List<PlanDto> select(String title, String userName, int sortType);
+	List<PlanDto> select(String title, String userId, int sortType);
 	PlanDto selectPlan(int planId);
 	List<PlanAttractionDto> selectPlanAttractions(int planId);
 	int countLiked(int planId);

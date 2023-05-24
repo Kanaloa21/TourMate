@@ -9,6 +9,7 @@ const attractionStore = {
     attractionNodeList: [],
     filteredAttractionList: [],
     selected: [12, 14, 15, 25, 28, 32, 38, 39],
+    paging: 1,
   },
   getters: {
     top10Attractions(state) {
@@ -21,13 +22,15 @@ const attractionStore = {
     },
     SEARCH_ATTRACTION_LIST(state, data) {
       state.attractionList = [...data];
-      state.filteredAttractionList = [...data];
     },
     SET_FILTERED_ATTRACTION_LIST(state) {
       console.log(state.selected);
-      state.filteredAttractionList = state.attractionList.filter((data) =>
-        state.selected.includes(data.contentType)
-      );
+      const temp = state.attractionList.filter((data) => state.selected.includes(data.contentType));
+
+      const showListNum = state.paging * 10;
+      const maxListNum = Math.min(showListNum, temp.length);
+
+      state.filteredAttractionList = temp.slice(0, maxListNum);
     },
     SET_SELECTED(state, data) {
       state.selected = data;
@@ -37,6 +40,9 @@ const attractionStore = {
     },
     SET_MAP_FOCUS_ATTRACTION_INFO(state, data) {
       state.mapFocusAttractionInfo = data;
+    },
+    SET_PAGING(state, data) {
+      state.paging = data;
     },
   },
   actions: {
@@ -53,6 +59,7 @@ const attractionStore = {
       http.get(uri).then(({ data }) => {
         console.log("data", data);
         commit("SEARCH_ATTRACTION_LIST", data);
+        commit("SET_FILTERED_ATTRACTION_LIST");
       });
     },
 

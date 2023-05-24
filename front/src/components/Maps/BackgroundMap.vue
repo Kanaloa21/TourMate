@@ -134,7 +134,12 @@ export default {
     ]),
   },
   computed: {
-    ...mapState(attractionStore, ["attractionList", "mapCenterPos", "mapFocusAttractionInfo"]),
+    ...mapState(attractionStore, [
+      "attractionList",
+      "mapCenterPos",
+      "mapFocusAttractionInfo",
+      "filteredAttractionList",
+    ]),
     ...mapGetters(attractionStore, ["top10Attractions"]),
   },
   watch: {
@@ -143,7 +148,7 @@ export default {
       this.SET_FILTERED_ATTRACTION_LIST();
       this.drawMapByList();
     },
-    attractionList() {
+    filteredAttractionList() {
       console.log("watched attractionList");
       this.drawMapByList();
     },

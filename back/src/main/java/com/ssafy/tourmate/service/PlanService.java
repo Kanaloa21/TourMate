@@ -17,8 +17,8 @@ public class PlanService {
 		this.planMapper = mapper;
 	}
 
-	public List<PlanDto> searchPlans(String title, String userName, int sortType) {
-		return planMapper.select(title, userName, sortType);
+	public List<PlanDto> searchPlans(String title, String userId, int sortType) {
+		return planMapper.select(title, userId, sortType);
 	}
 	
 	public PlanDto searchPlan(int planId, String userId) {
