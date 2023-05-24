@@ -100,10 +100,22 @@ export default {
     },
 
     showDetail(attraction) {
+      console.log(attraction, this.mapFocusAttractionInfo);
+      if (attraction == this.mapFocusAttractionInfo) {
+        this.SET_SHOW_DETAIL(false);
+        this.SET_MAP_FOCUS_ATTRACTION_INFO(null);
+        return;
+      }
+
       let latlng = { lat: attraction.latitude, lng: attraction.longitude };
       console.log(latlng);
       this.SET_MAP_CENTER_POS(latlng);
       this.SET_MAP_FOCUS_ATTRACTION_INFO(attraction);
+      let param = {
+        userId: this.userId,
+        contentId: attraction.contentId,
+      };
+      this.attractionDetail(param);
     },
     async clickLike(attraction) {
       if (!this.userId) {
@@ -127,6 +139,8 @@ export default {
     },
     submit() {
       this.SET_PAGING(1);
+      this.SET_SHOW_DETAIL(false);
+      this.SET_MAP_FOCUS_ATTRACTION_INFO(null);
       let params = {
         sidoCode: this.sidoCode,
         gugunCode: this.gugunCode,
@@ -145,12 +159,13 @@ export default {
       this.gugunCode = gugunCode;
     },
 
-    ...mapActions(attractionStore, ["searchAttractionList", "updateLiked"]),
+    ...mapActions(attractionStore, ["searchAttractionList", "updateLiked", "attractionDetail"]),
     ...mapMutations(attractionStore, [
       "SET_MAP_CENTER_POS",
       "SET_MAP_FOCUS_ATTRACTION_INFO",
       "SET_PAGING",
       "SET_FILTERED_ATTRACTION_LIST",
+      "SET_SHOW_DETAIL",
     ]),
     ...mapActions(itemStore, ["getGugun"]),
     ...mapMutations(itemStore, ["CLEAR_GUGUN_LIST"]),
@@ -158,7 +173,7 @@ export default {
   },
 
   computed: {
-    ...mapState(attractionStore, ["attractionList", "paging"]),
+    ...mapState(attractionStore, ["attractionList", "paging", "mapFocusAttractionInfo"]),
     ...mapState(userStore, ["userId"]),
     ...mapGetters(attractionStore, ["top10Attractions"]),
   },
