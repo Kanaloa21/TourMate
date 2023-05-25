@@ -88,15 +88,14 @@ export default {
       keyword: null,
     };
   },
-  created() {
-    const script = document.createElement("script");
-    script.setAttribute("src", "https://app1.weatherwidget.org/js/?id=ww_ad2a25e65daab");
-    document.head.appendChild(script);
-  },
+  created() {},
   mounted() {
     this.sidoCode = this.getSidoCode;
     this.gugunCode = this.getGugunCode;
     this.keyword = this.getKeyword;
+    const script = document.createElement("script");
+    script.setAttribute("src", "https://app1.weatherwidget.org/js/?id=ww_ad2a25e65daab");
+    document.head.appendChild(script);
   },
   methods: {
     showNotification() {

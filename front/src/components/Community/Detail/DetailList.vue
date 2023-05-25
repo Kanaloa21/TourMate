@@ -1,7 +1,18 @@
 <template>
   <div class="px-4 list bb scroll" style="overflow-y: scroll">
     <div>
-      <h3 class="mt-3" style="color: white; font-weight: bold">{{ userId }}의 북마크</h3>
+      <h1 class="mt-5" style="color: white; font-family: 'GangwonEduPowerExtraBoldA'">
+        {{ userId }}의 플랜
+      </h1>
+      <b-button
+        href="#"
+        variant="danger"
+        class="mx-0"
+        v-if="userId === planDetail.userId"
+        @click="deletePlan()"
+      >
+        삭제
+      </b-button>
     </div>
     <hr />
     <div v-if="planDetail != null">
@@ -18,6 +29,7 @@
 </template>
 
 <script>
+import http from "@/api/index";
 import { mapState } from "vuex";
 
 const planStore = "planStore";
@@ -35,7 +47,17 @@ export default {
   },
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    deletePlan() {
+      let uri = "/plan/" + this.planDetail.planId;
+      http.delete(uri).then(() => {
+        console.log("delete success");
+        alert("삭제 완료!");
+
+        this.$router.push({ name: "community" });
+      });
+    },
+  },
   computed: {
     ...mapState(planStore, ["planDetail"]),
   },
