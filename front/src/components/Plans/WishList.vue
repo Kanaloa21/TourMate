@@ -12,17 +12,6 @@
       >
     </div> -->
     <div>
-      <!-- <div class="form-group">
-        <div class="btn-group-vertical buttons" role="group" aria-label="Basic example">
-          <button class="btn btn-secondary" @click="add">Add</button>
-          <button class="btn btn-secondary" @click="replace">Replace</button>
-        </div>
-
-        <div class="form-check">
-          <input id="disabled" type="checkbox" v-model="enabled" class="form-check-input" />
-          <label class="form-check-label" for="disabled">DnD enabled</label>
-        </div>
-      </div> -->
       <b-row>
         <b-col></b-col>
         <b-col cols="6"
@@ -48,15 +37,6 @@
         @start="dragging = true"
         @end="dragging = false"
       >
-        <!-- <div v-for="attraction in top10Attractions" :key="attraction.contentId" class="list-group list-item">
-        <b-card
-          :title="attraction.title"
-          tag="article"
-          style="max-width: 20rem; color: black"
-          class="m-4"
-        >
-        </b-card>
-      </div> -->
         <div
           class="list-group-item"
           v-for="element in wishList"

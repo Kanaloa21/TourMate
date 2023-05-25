@@ -1,9 +1,6 @@
 <template>
-  <div
-    class="px-4 list bb scroll"
-    style="overflow-y: scroll"
-    @scroll="handleNotificationListScroll"
-  >
+  <!-- <div> -->
+  <div class="px-4 list scroll" style="overflow-y: scroll" @scroll="handleNotificationListScroll">
     <!-- <b-button class="position-absolute sidebar-toggle" style="z-index: 3">&#60;</b-button> -->
     <div>
       <b-row class="mt-3">
@@ -25,6 +22,17 @@
           </b-input-group-append>
         </b-input-group>
       </div>
+    </div>
+    <div
+      id="ww_ad2a25e65daab"
+      v="1.3"
+      loc="id"
+      a='{"t":"ticker","lang":"ko","sl_lpl":1,"ids":["wl2308"],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'
+    >
+      Weather Data Source:
+      <a href="https://wetterlabs.de/wetter_daejeon/woche/" id="ww_ad2a25e65daab_u" target="_blank"
+        >wetterlabs.de/wetter_daejeon/woche/</a
+      >
     </div>
     <hr />
     <div>
@@ -53,10 +61,11 @@
         </b-card>
       </div>
     </div>
-    <div class="notification-container" id="notification-container">
-      <p>You have already entered the letter</p>
-    </div>
   </div>
+  <!-- <div class="notification-container" id="notification-container">
+      <p>You have already entered the letter</p>
+    </div> -->
+  <!-- </div> -->
 </template>
 
 <script>
@@ -79,7 +88,11 @@ export default {
       keyword: null,
     };
   },
-  created() {},
+  created() {
+    const script = document.createElement("script");
+    script.setAttribute("src", "https://app1.weatherwidget.org/js/?id=ww_ad2a25e65daab");
+    document.head.appendChild(script);
+  },
   mounted() {
     this.sidoCode = this.getSidoCode;
     this.gugunCode = this.getGugunCode;
@@ -228,55 +241,8 @@ hr {
   background-color: rgb(200, 200, 200);
 }
 
-.button {
-  border-width: 2px;
-  border-radius: 15px;
-  transition: background-color 0.5s ease-out 10ms;
-  background-color: #42b983;
-}
-.dropdown {
-  width: 160px;
-  border-width: 2px;
-  border-radius: 15px;
-  transition: background-color 0.5s ease-out 10ms;
-  background-color: #42b983;
-}
-/* 
-.button:hover {
-  background-color: rgb(133, 133, 132);
-  border-width: 2px;
-} */
-
 .list-item {
   font-family: Jeju Gothic;
-}
-
-.sidebar-toggle {
-  top: 20vh;
-  left: 420px;
-  padding: 100px 0 0;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 25%), 0 2px 10px 0 rgb(0 0 0 / 25%);
-  width: 30px;
-  height: 70px;
-  padding: 0px;
-  background-color: rgb(10, 10, 10);
-}
-
-.bb {
-  --list-load-time: 300ms;
-}
-
-.side-list {
-  animation: list-load var(--list-load-time) ease-in;
-}
-
-@keyframes list-load {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
 }
 
 .scroll::-webkit-scrollbar {
@@ -293,14 +259,13 @@ hr {
 
 .notification-container {
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px;
   padding: 15px 20px;
-  position: absolute;
-  bottom: -50px;
-  transition: transform 0.3s ease-in-out;
+  bottom: 50px;
+  display: none;
 }
 
 .notification-container.show {
-  transform: translateY(-50px);
+  display: block;
 }
 </style>
