@@ -42,10 +42,10 @@
 
 <script>
 import SidebarNav from "@/components/SidebarNav.vue";
-import { mapActions, mapState } from "vuex";
+import { mapState } from "vuex";
+import http from "@/api/index";
 
 const userStore = "userStore";
-const planStore = "planStore";
 
 export default {
   name: "MyBookmarks",
@@ -64,13 +64,11 @@ export default {
     };
   },
   created() {
-    const payload = {
-      userId: this.userId,
-      sortType: 0,
-    };
-    this.getPlanList(payload);
-    this.bookmarkList = this.planList.filter((data) => data.bookmarked == true);
-    console.log("bookmarkList: " + this.bookmarkList);
+    let uri = `/plan/bookmarkList?userId=${this.userId}&sortType=${0}`;
+    http.get(uri).then(({ data }) => {
+      console.log("bookmarkList: " + data);
+      this.bookmarkList = data;
+    });
   },
   methods: {
     viewPlanDetail(plan) {
@@ -79,11 +77,9 @@ export default {
         params: { planId: plan.planId },
       });
     },
-    ...mapActions(planStore, ["getPlanList"]),
   },
   computed: {
     ...mapState(userStore, ["userId"]),
-    ...mapState(planStore, ["planList"]),
   },
 };
 </script>

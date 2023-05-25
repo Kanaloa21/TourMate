@@ -1,6 +1,8 @@
 <template>
   <b-container fluid class="container">
-    <b-row></b-row>
+    <b-row>
+      <img src="@/assets/TOURMATE (1).png" alt="" />
+    </b-row>
     <b-row class="center">
       <b-col cols="6" class="carousel">
         <b-carousel
