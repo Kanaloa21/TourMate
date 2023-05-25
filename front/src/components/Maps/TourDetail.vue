@@ -11,12 +11,22 @@
     </div>
     <hr />
     <div>{{ attractionDetail.addr1 }}</div>
+
     <b-row class="mt-3">
       <b-col
-        ><b-button variant="success">평가 {{ attractionComments.length }}</b-button></b-col
+        ><b-button href="#" size="md" variant="warning" @click="addPlan()"> 담기 </b-button></b-col
       >
       <b-col
-        ><b-button variant="danger">좋아요 {{ attractionDetail.likeCount }}</b-button></b-col
+        ><b-button size="sm" variant="success"
+          >평가<br />
+          {{ attractionComments.length }}</b-button
+        ></b-col
+      >
+      <b-col
+        ><b-button size="sm" variant="danger"
+          >좋아요<br />
+          {{ attractionDetail.likeCount }}</b-button
+        ></b-col
       >
     </b-row>
     <div class="p-2 mt-3 bg-light rounded">
@@ -37,7 +47,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import TourCommentItem from "./TourCommentItem.vue";
 
 const attractionStore = "attractionStore";
@@ -54,7 +64,8 @@ export default {
   },
   created() {},
   methods: {
-    ...mapActions(attractionStore, ["writeComment"]),
+    ...mapActions(attractionStore, ["writeComment", "updateLiked"]),
+    ...mapMutations(attractionStore, ["ADD_WISH_LIST"]),
     handleNotificationListScroll(e) {
       const { scrollHeight, scrollTop, clientHeight } = e.target;
       const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
@@ -82,6 +93,9 @@ export default {
 
       this.writeComment(param);
       this.comment = "";
+    },
+    addPlan() {
+      this.ADD_WISH_LIST(this.attractionDetail);
     },
   },
 
