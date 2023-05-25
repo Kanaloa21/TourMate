@@ -12,19 +12,17 @@
     <div>{{ attractionDetail.addr1 }}</div>
 
     <b-row class="mt-3">
-      <b-col
-        ><b-button href="#" size="md" variant="warning" @click="addPlan()"> 담기 </b-button></b-col
+      <b-col class="px-0"
+        ><b-button size="md" variant="warning" @click="addPlan()">담기</b-button></b-col
       >
-      <b-col
-        ><b-button size="sm" variant="success"
-          >평가<br />
-          {{ attractionComments.length }}</b-button
+      <b-col class="px-1"
+        ><b-button size="md" variant="success"
+          >평가 {{ attractionComments.length }}</b-button
         ></b-col
       >
-      <b-col
-        ><b-button size="sm" variant="danger"
-          >좋아요<br />
-          {{ attractionDetail.likeCount }}</b-button
+      <b-col class="px-2"
+        ><b-button size="md" variant="info"
+          >좋아요 {{ attractionDetail.likeCount }}</b-button
         ></b-col
       >
     </b-row>

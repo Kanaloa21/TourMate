@@ -10,7 +10,6 @@
         <select-sido @select-sido="selectSido"></select-sido>
         <select-gugun :sidoCode="sidoCode" @select-gugun="selectGugun"></select-gugun>
       </b-row>
-
       <div class="mt-3">
         <b-input-group class="mb-3" prepend="검색어">
           <b-form-input
@@ -54,6 +53,9 @@
         </b-card>
       </div>
     </div>
+    <div class="notification-container" id="notification-container">
+      <p>You have already entered the letter</p>
+    </div>
   </div>
 </template>
 
@@ -79,6 +81,14 @@ export default {
   },
   created() {},
   methods: {
+    showNotification() {
+      const notification = document.getElementById("notification-container");
+      notification.classList.add("show");
+      setTimeout(() => {
+        notification.classList.remove("show");
+      }, 2000);
+    },
+
     handleNotificationListScroll(e) {
       const { scrollHeight, scrollTop, clientHeight } = e.target;
       const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
@@ -97,6 +107,7 @@ export default {
     },
     addPlan(attraction) {
       this.ADD_WISH_LIST(attraction);
+      this.showNotification();
     },
 
     showDetail(attraction) {
@@ -262,5 +273,18 @@ hr {
 
 .scroll::-webkit-scrollbar-thumb {
   background: #42b983;
+}
+
+.notification-container {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px 10px 0 0;
+  padding: 15px 20px;
+  position: absolute;
+  bottom: -50px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.notification-container.show {
+  transform: translateY(-50px);
 }
 </style>

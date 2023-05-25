@@ -59,7 +59,7 @@ export default {
   },
   created() {},
   methods: {
-    putBookmark() {
+    async putBookmark() {
       let tmp = {
         id: this.planDetail.planId,
         userId: this.userId,
@@ -78,10 +78,15 @@ export default {
           planId: this.planDetail.planId,
         };
       }
-      this.getPlanDetail(params);
+      await this.getPlanDetail(params);
+      if (this.planDetail.bookmarked == true) {
+        this.bookmark = "bookmark-plus-fill";
+      } else {
+        this.bookmark = "bookmark-plus";
+      }
     },
 
-    putLike() {
+    async putLike() {
       let tmp = {
         id: this.planDetail.planId,
         userId: this.userId,
@@ -100,7 +105,12 @@ export default {
           planId: this.planDetail.planId,
         };
       }
-      this.getPlanDetail(params);
+      await this.getPlanDetail(params);
+      if (this.planDetail.liked == true) {
+        this.like = "hand-thumbs-up-fill";
+      } else {
+        this.like = "hand-thumbs-up";
+      }
     },
     ...mapActions(planStore, ["getPlanDetail"]),
   },
