@@ -120,14 +120,20 @@ public class PlanController {
 	@DeleteMapping("/{planId}")
 	public ResponseEntity<String> removePlan(@PathVariable("planId") @ApiParam("플랜 Id") int planId) {
 		String msg = SUCCESS;
-		logger.debug("여행 계획 삭제");
+		logger.debug("여행 계획 삭제, params : {}", planId);
 		
-		if (planService.removePlan(planId) == 0) {
+		try {
+			if (planService.removePlan(planId) == 0) {
+				msg = FAIL;
+				logger.error("여행 계획 삭제 실패");
+			} else {
+				logger.info("여행 계획 삭제 성공");
+			}
+		} catch(Exception e) {
 			msg = FAIL;
-			logger.error("여행 계획 삭제 실패");
-		} else {
-			logger.error("여행 계획 삭제 성공");
+			logger.error("여행 계획 삭제 실패, error : {}", e);
 		}
+
 		
 		return new ResponseEntity<String>(msg, HttpStatus.OK);
 	}

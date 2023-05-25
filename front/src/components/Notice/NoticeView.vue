@@ -2,7 +2,7 @@
   <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
-        <b-alert show><h3>글보기</h3></b-alert>
+        <b-alert show><h3>공지 사항 내용</h3></b-alert>
       </b-col>
     </b-row>
     <b-row class="mb-1">
@@ -20,11 +20,12 @@
       <b-col>
         <b-card
           :header-html="`<h3>${article.title}</h3><div><h6>${article.writer}</div><div>${article.date}</h6></div>`"
+          header-text-variant="dark"
           class="mb-2"
           border-variant="dark"
           no-body
         >
-          <b-card-body class="text-left">
+          <b-card-body class="text-left" body-text-variant="dark">
             <div v-html="message"></div>
           </b-card-body>
         </b-card>

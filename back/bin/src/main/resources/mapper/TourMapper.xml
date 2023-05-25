@@ -3,18 +3,42 @@
 <mapper namespace="com.ssafy.tourmate.mapper.TourMapper">
 
 	<select id="selectList" resultType="com.ssafy.tourmate.dto.TourDto">
-	<bind name="pattern" value="'%' + keyword + '%'" />
+	
 		SELECT 
-			CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE, ADDR1, ADDR2, LATITUDE, LONGITUDE, IFNULL(CNT_TB.CI, 0) as likeCount
+			CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE, ADDR1, ADDR2, 
+			LATITUDE, LONGITUDE, CNT_TB.CNT as likeCount, CONTENT_TYPE_ID as contentType
+			<if test="userId != null">
+				, IF(USER_LIKE.LI IS NOT NULL, 1, 0) as liked
+			</if>
 		FROM
 			ATTRACTION_INFO AS A
 				LEFT JOIN (SELECT COUNT(CONTENT_ID) AS CNT, CONTENT_ID AS CI
 							FROM USER_ATTRACTION_LIKE
 							GROUP BY CONTENT_ID) AS CNT_TB
 				ON A.CONTENT_ID = CNT_TB.CI
-		WHERE TITLE LIKE #{pattern}
-		<if test="areaCode != 0">
-			AND SIDO_CODE = #{areaCode}
+				<if test="userId != null">
+					LEFT JOIN (SELECT DISTINCT CONTENT_ID AS LI FROM USER_ATTRACTION_LIKE WHERE USER_ID LIKE #{userId}) AS USER_LIKE
+					ON A.CONTENT_ID = USER_LIKE.LI
+				</if>
+				
+		<if test="sidoCode > 0 or gugunCode > 0 or keyword != null ">
+			WHERE
+		</if>		
+		<if test="sidoCode > 0">
+			SIDO_CODE = #{sidoCode}
+		</if>
+		<if test="gugunCode > 0">
+			<if test="sidoCode > 0">
+				AND
+			</if>
+			GUGUN_CODE = #{gugunCode}
+		</if>
+		<if test="keyword != null">
+			<if test="sidoCode > 0 or gugunCode > 0">
+				AND
+			</if>
+			<bind name="pattern" value="'%' + keyword + '%'" />
+			TITLE LIKE #{pattern}
 		</if>
 		ORDER BY likeCount DESC
 	</select>
@@ -22,7 +46,7 @@
 	<select id="selectDetail" resultType="com.ssafy.tourmate.dto.TourDto">
 		
 		SELECT 
-			CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE, ADDR1, ADDR2, LATITUDE, LONGITUDE, IFNULL(CNT_TB.CI, 0) as likeCount
+			CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE, ADDR1, ADDR2, LATITUDE, LONGITUDE, CNT_TB.CNT as likeCount, CONTENT_TYPE_ID as contentType
 		FROM
 			ATTRACTION_INFO AS A
 				LEFT JOIN (SELECT COUNT(CONTENT_ID) AS CNT, CONTENT_ID AS CI
@@ -31,6 +55,40 @@
 				ON A.CONTENT_ID = CNT_TB.CI
 		WHERE A.CONTENT_ID = #{contentId}
 
+	</select>
+	
+	<select id="selectSidoList" resultType="com.ssafy.tourmate.dto.SidoDto">
+	
+		SELECT
+			SIDO_CODE AS sidoCode, SIDO_NAME AS sidoName
+		FROM
+			SIDO
+	
+	</select>
+	
+	<select id="selectGugunList" resultType="com.ssafy.tourmate.dto.GugunDto">
+		
+		SELECT 
+			GUGUN_CODE AS gugunCode, GUGUN_NAME AS gugunName
+		FROM
+			GUGUN
+		WHERE
+			SIDO_CODE = #{sidoCode}
+	
+	</select>
+	
+	<select id="isLiked" resultType="int">
+	
+		SELECT 
+			EXISTS(
+				SELECT 
+					1
+				FROM
+					USER_ATTRACTION_LIKE
+				WHERE
+					CONTENT_ID = #{contentId} AND USER_ID = #{userId}
+			) AS CNT
+	
 	</select>
 	
 	<insert id="createLike">
@@ -43,7 +101,7 @@
 	<delete id="deleteLike">
 	
 		DELETE FROM USER_ATTRACTION_LIKE
-		WHERE CONTENT_ID = ##{contentId} AND USER_ID LIKE #{userId}
+		WHERE CONTENT_ID = #{contentId} AND USER_ID LIKE #{userId}
 	
 	</delete>
 

@@ -5,18 +5,80 @@
 	<select id="select" resultType="com.ssafy.tourmate.dto.PlanDto">
 
 		SELECT 
-			USER_ID as userId, PLAN_ID as planId, SUBJECT, SUMMARY,
-			CREATE_TIME as createTime, HIT
-		FROM PLAN
+			A.USER_ID as userId, A.PLAN_ID as planId, A.SUBJECT, A.SUMMARY, A.CREATE_TIME as createTime, A.HIT, CNT_TB.CNT AS likeCount
+		FROM 
+			PLAN AS A
+				LEFT JOIN 
+					(SELECT 
+						COUNT(PLAN_ID_LIKE) AS CNT, PLAN_ID_LIKE AS PI
+					FROM 
+						USER_PLAN_LIKE
+					GROUP BY 
+						PLAN_ID_LIKE) AS CNT_TB
+				ON A.PLAN_ID = CNT_TB.PI
+		<if test="title != null or userId != null">
+			WHERE
+		</if>
 
 		<if test="title != null">
 			<bind name="pattern" value="'%' + title + '%'" />
-			WHERE SUBJECT LIKE #{pattern}
+			SUBJECT LIKE #{pattern}
 		</if>
 		<if test="userId != null">
-			WHERE USER_ID LIKE #{userId}
+			<if test="title != null">
+				AND
+			</if>
+			USER_ID IN 
+				(SELECT USER_ID FROM USER WHERE USER_ID LIKE #{userId})
 		</if>
-		ORDER BY CREATE_TIME DESC
+		<choose>
+			<when test="sortType == 1">
+				ORDER BY CNT_TB.CNT DESC
+			</when>
+			<when test="sortType == 2">
+				ORDER BY A.HIT DESC
+			</when>
+			<otherwise>
+				ORDER BY CREATE_TIME DESC
+			</otherwise>
+		</choose>
+		
+
+	</select>
+	
+	<select id="selectBookmarkList" resultType="com.ssafy.tourmate.dto.PlanDto">
+
+		SELECT 
+			A.USER_ID as userId, A.PLAN_ID as planId, A.SUBJECT, A.SUMMARY, A.CREATE_TIME as createTime, A.HIT, CNT_TB.CNT AS likeCount
+			, IF(BOOKMARK.PI IS NOT NULL, 1, 0) as isBookmarked
+		FROM 
+			PLAN AS A
+				LEFT JOIN 
+					(SELECT 
+						COUNT(PLAN_ID_LIKE) AS CNT, PLAN_ID_LIKE AS PI
+					FROM 
+						USER_PLAN_LIKE
+					GROUP BY 
+						PLAN_ID_LIKE) AS CNT_TB
+				ON A.PLAN_ID = CNT_TB.PI
+				
+				LEFT JOIN (SELECT DISTINCT PLAN_ID AS PI FROM USER_PLAN_BOOKMARK WHERE USER_ID LIKE #{userId}) AS BOOKMARK
+				
+				ON A.PLAN_ID = BOOKMARK.PI
+		WHERE BOOKMARK.PI IS NOT NULL
+
+		<choose>
+			<when test="sortType == 1">
+				ORDER BY CNT_TB.CNT DESC
+			</when>
+			<when test="sortType == 2">
+				ORDER BY A.HIT DESC
+			</when>
+			<otherwise>
+				ORDER BY CREATE_TIME DESC
+			</otherwise>
+		</choose>
+		
 
 	</select>
 
@@ -53,7 +115,7 @@
 
 				(SELECT
 					B.CONTENT_ID as contentID, FIRST_IMAGE as imageURL, TITLE,
-					ADDR1, ADDR2, LATITUDE, LONGITUDE, IFNULL(CNT_TB.CI, 0) as likeCount
+					ADDR1, ADDR2, LATITUDE, LONGITUDE, CNT_TB.CNT as likeCount
 				FROM
 						ATTRACTION_INFO AS B
 					LEFT JOIN
@@ -71,10 +133,10 @@
 
 	</select>
 
-	<select id="countLiked">
+	<select id="countLiked" resultType="int">
 
 		SELECT 
-			COUNT(USER_ID) AS CNT
+			COUNT(USER_ID_LIKE) AS CNT
 		FROM 
 			USER_PLAN_LIKE
 		WHERE
@@ -82,25 +144,31 @@
 
 	</select>
 
-	<select id="checkLiked">
+	<select id="checkLiked" resultType="int">
 
 		SELECT 
-			COUNT(USER_ID) AS CNT
-		FROM 
-			USER_PLAN_LIKE
-		WHERE
-			USER_ID_LIKE = #{userId} AND PLAN_ID_LIKE = #{planId}
+			EXISTS(
+				SELECT 
+					1
+				FROM 
+					USER_PLAN_LIKE
+				WHERE
+					USER_ID_LIKE = #{userId} AND PLAN_ID_LIKE = #{planId})
+			AS CNT
 
 	</select>
 
-	<select id="checkBookmarked">
+	<select id="checkBookmarked" resultType="int">
 
 		SELECT 
-			COUNT(USER_ID) AS CNT
-		FROM 
-			USER_PLAN_BOOKMARK
-		WHERE 
-			USER_ID = #{userId} AND PLAN_ID = #{planId}
+			EXISTS(
+				SELECT 
+					1
+				FROM 
+					USER_PLAN_BOOKMARK
+				WHERE 
+					USER_ID = #{userId} AND PLAN_ID = #{planId}) 
+			AS CNT
 
 	</select>
 
@@ -140,7 +208,7 @@
 
 	</insert>
 
-	<insert id="inserBookmark">
+	<insert id="insertBookmark">
 
 		INSERT INTO 
 			USER_PLAN_BOOKMARK (USER_ID, PLAN_ID)

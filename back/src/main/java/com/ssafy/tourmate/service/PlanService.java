@@ -15,8 +15,9 @@ public class PlanService {
 	private PlanMapper planMapper;
 	private CommentMapper commentMapper;
 	
-	private PlanService(PlanMapper mapper) {
+	private PlanService(PlanMapper mapper, CommentMapper commentMapper) {
 		this.planMapper = mapper;
+		this.commentMapper = commentMapper;
 	}
 
 	public List<PlanDto> searchPlans(String title, String userId, int sortType) {

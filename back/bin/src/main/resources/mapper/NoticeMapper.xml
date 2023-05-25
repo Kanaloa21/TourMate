@@ -10,7 +10,7 @@
 			<bind name="pattern" value="'%' + keyword + '%'" />
 			WHERE TITLE LIKE #{pattern}
 		</if>
-		ORDER BY DATE
+		ORDER BY DATE DESC
 	
 	</select>
 	
@@ -24,8 +24,8 @@
 
 	<insert id="insertNotice" parameterType="com.ssafy.tourmate.dto.NoticeDto">
 	
-		INSERT INTO NOTICE (ID, TITLE, WRITER, CONTENT, DATE)
-		VALUES(#{id}, #{title}, #{writer}, #{content}, NOW())
+		INSERT INTO NOTICE (TITLE, WRITER, CONTENT, DATE)
+		VALUES(#{title}, #{writer}, #{content}, NOW())
 	
 	</insert>
 	
