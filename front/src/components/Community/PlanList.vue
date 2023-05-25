@@ -31,12 +31,13 @@ export default {
         { key: "userId", label: "작성자", tdClass: "tdClass" },
         { key: "createTime", label: "작성일", tdClass: "tdClass" },
         { key: "hit", label: "조회수", tdClass: "tdClass" },
+        { key: "likeCount", label: "좋아요", tdClass: "tdClass" },
       ],
     };
   },
   created() {
-    const tmp = { sortType: 0 };
-    this.getWishList(tmp);
+    const tmp = { userId: null, sortType: 0 };
+    this.getPlanList(tmp);
   },
   mounted() {},
   methods: {
@@ -46,7 +47,7 @@ export default {
         params: { planId: plan.planId },
       });
     },
-    ...mapActions(planStore, ["getWishList"]),
+    ...mapActions(planStore, ["getPlanList"]),
   },
   computed: {
     ...mapState(planStore, ["planList"]),

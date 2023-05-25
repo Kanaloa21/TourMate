@@ -7,50 +7,15 @@
           <b-card title="Card Title" no-body>
             <b-card-header header-tag="nav">
               <b-nav card-header tabs>
-                <b-nav-item active>내 정보</b-nav-item>
+                <b-nav-item active>
+                  <router-link to="/mypage/myinfo"></router-link> 내 정보</b-nav-item
+                >
                 <b-nav-item>내 북마크</b-nav-item>
                 <b-nav-item>내 플랜</b-nav-item>
               </b-nav>
             </b-card-header>
             <b-card-body class="text-center">
-              <!-- <b-card-text>
-            With supporting text below as a natural lead-in to additional content.
-          </b-card-text>
-          <b-button variant="primary">Go somewhere</b-button> -->
-              <b-jumbotron>
-                <template #header>My Page</template>
-                <template #lead> 내 정보 확인페이지입니다. </template>
-                <hr class="my-4" />
-                <b-container class="mt-4">
-                  <b-row>
-                    <b-col cols="2"></b-col>
-                    <b-col cols="2" align-self="end">아이디</b-col
-                    ><b-col cols="4" align-self="start">{{ userInfo.userId }}</b-col>
-                    <b-col cols="2"></b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col cols="2"></b-col>
-                    <b-col cols="2" align-self="end">이름</b-col
-                    ><b-col cols="4" align-self="start">{{ userInfo.userName }}</b-col>
-                    <b-col cols="2"></b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col cols="2"></b-col>
-                    <b-col cols="2" align-self="end">전화번호</b-col
-                    ><b-col cols="4" align-self="start">{{ userInfo.phoneNumber }}</b-col>
-                    <b-col cols="2"></b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col cols="2"></b-col>
-                    <b-col cols="2" align-self="end">성별</b-col
-                    ><b-col cols="4" align-self="start">{{ gender }}</b-col>
-                    <b-col cols="2"></b-col>
-                  </b-row>
-                </b-container>
-                <hr class="my-4" />
-                <b-button variant="primary" href="#" class="mr-1">정보수정</b-button>
-                <b-button variant="danger" href="#">회원탈퇴</b-button>
-              </b-jumbotron>
+              <router-view></router-view>
             </b-card-body>
           </b-card>
         </div>
@@ -67,6 +32,9 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+// import MyInfo from "./MyPage/MyInfo.vue";
+// import MyBookmarks from "./MyPage/MyBookmarks.vue";
+// import MyPlans from "./MyPage/MyPlans.vue";
 
 const userStore = "userStore";
 
