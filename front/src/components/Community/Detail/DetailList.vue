@@ -2,7 +2,7 @@
   <div class="px-4 list bb scroll" style="overflow-y: scroll">
     <div>
       <h1 class="mt-5" style="color: white; font-family: 'GangwonEduPowerExtraBoldA'">
-        {{ userId }}의 플랜
+        {{ planDetail.userId }}의 플랜
       </h1>
       <b-button
         href="#"
