@@ -45,6 +45,42 @@
 		
 
 	</select>
+	
+	<select id="selectBookmarkList" resultType="com.ssafy.tourmate.dto.PlanDto">
+
+		SELECT 
+			A.USER_ID as userId, A.PLAN_ID as planId, A.SUBJECT, A.SUMMARY, A.CREATE_TIME as createTime, A.HIT, CNT_TB.CNT AS likeCount
+			, IF(BOOKMARK.PI IS NOT NULL, 1, 0) as isBookmarked
+		FROM 
+			PLAN AS A
+				LEFT JOIN 
+					(SELECT 
+						COUNT(PLAN_ID_LIKE) AS CNT, PLAN_ID_LIKE AS PI
+					FROM 
+						USER_PLAN_LIKE
+					GROUP BY 
+						PLAN_ID_LIKE) AS CNT_TB
+				ON A.PLAN_ID = CNT_TB.PI
+				
+				LEFT JOIN (SELECT DISTINCT PLAN_ID AS PI FROM USER_PLAN_BOOKMARK WHERE USER_ID LIKE #{userId}) AS BOOKMARK
+				
+				ON A.PLAN_ID = BOOKMARK.PI
+		WHERE BOOKMARK.PI IS NOT NULL
+
+		<choose>
+			<when test="sortType == 1">
+				ORDER BY CNT_TB.CNT DESC
+			</when>
+			<when test="sortType == 2">
+				ORDER BY A.HIT DESC
+			</when>
+			<otherwise>
+				ORDER BY CREATE_TIME DESC
+			</otherwise>
+		</choose>
+		
+
+	</select>
 
 	<select id="selectPlan"
 		resultType="com.ssafy.tourmate.dto.PlanDto">
