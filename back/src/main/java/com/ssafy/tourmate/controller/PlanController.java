@@ -60,6 +60,20 @@ public class PlanController {
 		return new ResponseEntity<>(planService.searchPlans(title, userId, sortType), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "여행 계획 북마크 리스트", notes = "북마크한 여행 계획 리스트를 불러온다.", response = PlanDto.class)
+	@GetMapping("/bookmarkList")
+	public ResponseEntity<List<PlanDto>> searchMyBookmarkPlanList(
+			@ApiParam(value = "유저 ID", required = false)
+			@RequestParam(value = "userId", required=false) 
+			String userId,
+			@ApiParam(value = "정렬 방법 (0 : 최신순, 1 : 좋아요 순, 2 : 조회수 순", required = true)
+			@RequestParam(value = "sortType", required = true)
+			int sortType
+	) {
+		logger.debug("여행 계획 리스트 불러오기, params : {}, {}", userId, sortType);
+		return new ResponseEntity<>(planService.searchBookmarkPlans(userId, sortType), HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "여행 계획 상세보기", notes = "여행 계획의 상세 정보를 불러온다", response = PlanDto.class)
 	@GetMapping("/detail")
 	public ResponseEntity<PlanDto> searchPlanDetail(
@@ -134,7 +148,7 @@ public class PlanController {
 		return new ResponseEntity<String>(msg, HttpStatus.OK);
 	}
 	
-	// JWT 적용시 userID를 헤더에서 가져옴
+
 	@PutMapping("/bookmark")
 	public ResponseEntity<String> changePlanBookmark(
 			@RequestBody @ApiParam("id : 플랜 id, userId : 유저 id") LikeDto dto

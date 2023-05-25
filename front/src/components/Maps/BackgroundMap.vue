@@ -41,7 +41,7 @@ export default {
         { text: "쇼핑", value: 38 },
         { text: "음식점", value: 39 },
       ],
-      selectedMarkerIndex: null,
+      selectedMarkerIndex: 0,
     };
   },
   mounted() {
@@ -99,11 +99,19 @@ export default {
 
       //
       if (positions.length > 0) {
-        this.markers = positions.map((position) => {
+        this.markers = positions.map((position, index) => {
           const marker = new kakao.maps.Marker({
             map: this.map,
             position,
             draggable: false,
+          });
+
+          kakao.maps.event.addListener(marker, "click", () => {
+            if (this.selectedMarkerIndex === index) {
+              this.selectedMarkerIndex = null;
+            } else {
+              this.selectedMarkerIndex = index;
+            }
           });
 
           return marker;
@@ -128,12 +136,13 @@ export default {
       this.customOverlay.setMap(null);
     },
 
-    ...mapActions(attractionStore, ["searchAttractionList"]),
+    ...mapActions(attractionStore, ["searchAttractionList", "attractionDetail"]),
     ...mapMutations(attractionStore, [
       "SET_MAP_CENTER_POS",
       "SET_FILTERED_ATTRACTION_LIST",
       "SET_SELECTED",
       "SET_MAP_FOCUS_ATTRACTION_INFO",
+      "SET_SHOW_DETAIL",
     ]),
   },
   computed: {
@@ -146,6 +155,29 @@ export default {
     ...mapGetters(attractionStore, ["top10Attractions"]),
   },
   watch: {
+    selectedMarkerIndex() {
+      console.log(this.selectedMarkerIndex);
+      if (
+        this.selectedMarkerIndex === null ||
+        this.mapFocusAttractionInfo == this.filteredAttractionList[this.selectedMarkerIndex]
+      ) {
+        this.SET_SHOW_DETAIL(false);
+        this.SET_MAP_FOCUS_ATTRACTION_INFO(null);
+        return;
+      }
+
+      const attraction = this.filteredAttractionList[this.selectedMarkerIndex];
+      let latlng = { lat: attraction.latitude, lng: attraction.longitude };
+      console.log(latlng);
+      this.SET_MAP_CENTER_POS(latlng);
+      this.SET_MAP_FOCUS_ATTRACTION_INFO(attraction);
+
+      let param = {
+        userId: this.userId,
+        contentId: attraction.contentId,
+      };
+      this.attractionDetail(param);
+    },
     selected() {
       this.SET_SELECTED(this.selected);
       this.SET_FILTERED_ATTRACTION_LIST();
@@ -165,6 +197,9 @@ export default {
       if (this.customOverlay != null) {
         this.customOverlay.setMap(null);
       }
+
+      if (!this.mapFocusAttractionInfo) return;
+
       let title = this.mapFocusAttractionInfo.title;
       let addr1 = this.mapFocusAttractionInfo.addr1;
       let likeCount = this.mapFocusAttractionInfo.likeCount;

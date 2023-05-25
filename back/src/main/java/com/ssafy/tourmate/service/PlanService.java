@@ -87,4 +87,8 @@ public class PlanService {
 		}
 	}
 
+	public List<PlanDto> searchBookmarkPlans(String userId, int sortType) {
+		return planMapper.selectBookmarkList(userId, sortType);
+	}
+
 }

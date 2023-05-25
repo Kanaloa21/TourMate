@@ -1,24 +1,60 @@
 <template>
-  <div
-    class="px-4 list bb scroll"
+  <b-container
+    v-if="showDetail"
+    class="px-3 list bb scroll"
     style="overflow-y: scroll"
     @scroll="handleNotificationListScroll"
   >
-    <div><h2 class="mt-3">title</h2></div>
+    <div><b-img class="mt-2 rounded" :src="attractionDetail.imageURL" width="280px"></b-img></div>
+    <div class="mt-4 font">
+      <h1>{{ attractionDetail.title }}</h1>
+    </div>
     <hr />
-    <div>내용입력</div>
-  </div>
+    <div>{{ attractionDetail.addr1 }}</div>
+    <b-row class="mt-3">
+      <b-col
+        ><b-button variant="success">평가 {{ attractionComments.length }}</b-button></b-col
+      >
+      <b-col
+        ><b-button variant="danger">좋아요 {{ attractionDetail.likeCount }}</b-button></b-col
+      >
+    </b-row>
+    <div class="p-2 mt-3 bg-light rounded">
+      <b-input-group v-if="userId" class="mt-3 mb-3">
+        <b-form-input placeholder="한줄평을 남겨주세요!" v-model="comment"></b-form-input>
+        <b-input-group-append>
+          <b-button
+            variant="info"
+            @keypress.enter="writeAttractionComment"
+            @click="writeAttractionComment"
+            >작성</b-button
+          >
+        </b-input-group-append>
+      </b-input-group>
+      <tour-comment-item v-for="item in commentList" :key="item.id" v-bind="item" />
+    </div>
+  </b-container>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+import TourCommentItem from "./TourCommentItem.vue";
+
+const attractionStore = "attractionStore";
+const userStore = "userStore";
+
 export default {
   name: "TourDetail",
-  components: {},
+  components: { TourCommentItem },
   data() {
-    return {};
+    return {
+      comment: "",
+      commentPage: 10,
+    };
   },
   created() {},
   methods: {
+    ...mapActions(attractionStore, ["writeComment"]),
     handleNotificationListScroll(e) {
       const { scrollHeight, scrollTop, clientHeight } = e.target;
       const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
@@ -30,14 +66,37 @@ export default {
 
     // 내려오면 api를 호출하여 아래에 더 추가,
     handleLoadMore() {
-      console.log("리스트 추가");
-      this.SET_PAGING(this.paging + 1);
-      this.SET_FILTERED_ATTRACTION_LIST();
+      if (this.commentPage < this.attractionComments.length) {
+        this.commentPage = this.commentPage + 10;
+        this.commentPage = Math.min(this.commentPage, this.attractionComments.length);
+      }
+
       // api를 호출하여 리스트 추가하면 됨, 현재는 pushList에 1개의 index 추가
+    },
+    writeAttractionComment() {
+      const param = {
+        contentId: this.attractionDetail.contentId,
+        comment: this.comment,
+        writer: this.userId,
+      };
+
+      this.writeComment(param);
+      this.comment = "";
     },
   },
 
-  computed: {},
+  computed: {
+    ...mapState(attractionStore, ["showDetail", "attractionDetail", "attractionComments"]),
+    ...mapState(userStore, ["userId"]),
+    commentList() {
+      return this.attractionComments.slice(0, this.commentPage);
+    },
+  },
+  watch: {
+    attractionDetail() {
+      this.commentPage = 10;
+    },
+  },
 };
 </script>
 

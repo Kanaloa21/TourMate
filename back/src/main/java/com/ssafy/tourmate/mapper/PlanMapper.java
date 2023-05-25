@@ -11,6 +11,7 @@ import com.ssafy.tourmate.dto.PlanDto;
 public interface PlanMapper {
 
 	List<PlanDto> select(String title, String userId, int sortType);
+	List<PlanDto> selectBookmarkList(String userId, int sortType);
 	PlanDto selectPlan(int planId);
 	List<PlanAttractionDto> selectPlanAttractions(int planId);
 	int countLiked(int planId);
@@ -29,5 +30,6 @@ public interface PlanMapper {
 	int deletePlanAttractions(int planId);
 	int deleteLike(int planId, String userId);
 	int deleteBookmark(int planId, String userId);
+	
 	
 }
