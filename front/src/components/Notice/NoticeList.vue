@@ -2,7 +2,9 @@
   <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
-        <b-alert show><h3>공지사항</h3></b-alert>
+        <h1 class="mt-3" style="color: black; font-family: 'GangwonEduPowerExtraBoldA'">
+          <b-icon icon="megaphone"></b-icon> 공지사항
+        </h1>
       </b-col>
     </b-row>
     <b-row class="mb-1">
@@ -14,7 +16,13 @@
     </b-row>
     <b-row>
       <b-col>
-        <b-table striped hover :items="articles" :fields="fields" @row-clicked="viewArticle">
+        <b-table
+          head-variant="light"
+          hover
+          :items="articles"
+          :fields="fields"
+          @row-clicked="viewArticle"
+        >
         </b-table>
       </b-col>
     </b-row>

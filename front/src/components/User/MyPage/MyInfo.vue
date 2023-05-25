@@ -15,33 +15,32 @@
                 </b-nav>
               </b-card-header>
               <b-card-body class="text-center">
-                <b-jumbotron>
-                  <template #header>My Page</template>
-                  <template #lead> 내 정보 확인페이지입니다. </template>
+                <b-jumbotron
+                  ><h1><b-icon icon="person"></b-icon>My Page</h1>
                   <hr class="my-4" />
-                  <b-container class="mt-4">
+                  <b-container class="mt-4" style="font-size: 20px">
                     <b-row>
-                      <b-col cols="2"></b-col>
+                      <b-col cols="4"></b-col>
                       <b-col cols="2" align-self="end">아이디</b-col
-                      ><b-col cols="4" align-self="start">{{ userInfo.userId }}</b-col>
+                      ><b-col cols="2" align-self="start">{{ userInfo.userId }}</b-col>
                       <b-col cols="2"></b-col>
                     </b-row>
                     <b-row>
-                      <b-col cols="2"></b-col>
+                      <b-col cols="4"></b-col>
                       <b-col cols="2" align-self="end">이름</b-col
-                      ><b-col cols="4" align-self="start">{{ userInfo.userName }}</b-col>
+                      ><b-col cols="2" align-self="start">{{ userInfo.userName }}</b-col>
                       <b-col cols="2"></b-col>
                     </b-row>
                     <b-row>
-                      <b-col cols="2"></b-col>
+                      <b-col cols="4"></b-col>
                       <b-col cols="2" align-self="end">전화번호</b-col
-                      ><b-col cols="4" align-self="start">{{ userInfo.phoneNumber }}</b-col>
+                      ><b-col cols="2" align-self="start">{{ userInfo.phoneNumber }}</b-col>
                       <b-col cols="2"></b-col>
                     </b-row>
                     <b-row>
-                      <b-col cols="2"></b-col>
+                      <b-col cols="4"></b-col>
                       <b-col cols="2" align-self="end">성별</b-col
-                      ><b-col cols="4" align-self="start">{{ gender }}</b-col>
+                      ><b-col cols="2" align-self="start">{{ gender }}</b-col>
                       <b-col cols="2"></b-col>
                     </b-row>
                   </b-container>

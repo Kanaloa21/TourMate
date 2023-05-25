@@ -17,15 +17,15 @@
                 </b-nav>
               </b-card-header>
               <b-card-body class="text-center">
-                <h2>내 북마크</h2>
+                <h2><b-icon icon="bookmark-plus-fill"></b-icon> 내 북마크</h2>
                 <hr class="my-1" />
                 <b-container class="mt-4">
                   <b-table
-                    striped
                     hover
                     :items="bookmarkList"
                     :fields="fields"
                     @row-clicked="viewPlanDetail"
+                    head-variant="light"
                   >
                   </b-table>
                 </b-container>
@@ -57,7 +57,7 @@ export default {
         { key: "planId", label: "글번호", tdClass: "tdClass" },
         { key: "subject", label: "제목", tdClass: "tdSubject" },
         { key: "userId", label: "작성자", tdClass: "tdClass" },
-        { key: "createTime", label: "작성일", tdClass: "tdClass" },
+        { key: "createTime", label: "작성일", tdClass: "tdDate" },
         { key: "hit", label: "조회수", tdClass: "tdClass" },
       ],
       bookmarkList: [],
@@ -87,5 +87,9 @@ export default {
 <style scoped>
 .userInfo {
   color: black;
+}
+
+.tdDate {
+  width: 100px;
 }
 </style>

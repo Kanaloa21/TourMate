@@ -2,13 +2,21 @@
   <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
-        <b-alert show><h3>글목록</h3></b-alert>
+        <h1 class="mt-3" style="color: black; font-family: 'GangwonEduPowerExtraBoldA'">
+          <b-icon icon="people"></b-icon> 커뮤니티
+        </h1>
       </b-col>
     </b-row>
     <b-row class="mb-1"> </b-row>
     <b-row>
       <b-col>
-        <b-table striped hover :items="planList" :fields="fields" @row-clicked="viewPlanDetail">
+        <b-table
+          hover
+          :items="planList"
+          :fields="fields"
+          @row-clicked="viewPlanDetail"
+          head-variant="light"
+        >
         </b-table>
       </b-col>
     </b-row>
@@ -29,7 +37,7 @@ export default {
         { key: "planId", label: "글번호", tdClass: "tdClass" },
         { key: "subject", label: "제목", tdClass: "tdSubject" },
         { key: "userId", label: "작성자", tdClass: "tdClass" },
-        { key: "createTime", label: "작성일", tdClass: "tdClass" },
+        { key: "createTime", label: "작성일", tdClass: "tdDate" },
         { key: "hit", label: "조회수", tdClass: "tdClass" },
         { key: "likeCount", label: "좋아요", tdClass: "tdClass" },
       ],
@@ -64,5 +72,8 @@ export default {
 .tdSubject {
   width: 300px;
   text-align: center;
+}
+.tdDate {
+  width: 100px;
 }
 </style>
