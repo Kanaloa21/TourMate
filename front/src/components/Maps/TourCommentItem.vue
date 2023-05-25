@@ -7,13 +7,15 @@
       ><b-col class="text-break">{{ comment }}</b-col></b-row
     >
     <b-row
-      ><b-col style="font-size: 14px">{{ writeDate }}</b-col
-      ><b-col
-        style="font-size: 14px; text-align: end"
-        v-if="writer === userId"
-        @click="removeComment"
-        >삭제</b-col
-      ></b-row
+      ><b-col cols="8" class="mt-2" style="font-size: 14px">{{ writeDate }}</b-col>
+      <b-col
+        ><b-button
+          style="font-size: 13px; text-align: end"
+          v-if="writer === userId"
+          @click="removeComment"
+          >삭제</b-button
+        >
+      </b-col></b-row
     >
   </div>
 </template>
