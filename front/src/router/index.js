@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import MapsView from "../views/MapsView.vue";
-import MyPageView from "../views/MyPageView.vue";
+// import MyPageView from "../views/MyPageView.vue";
 import NoticeView from "../views/NoticeView.vue";
 import PlansView from "../views/PlansView.vue";
 import UserView from "../views/UserView";
@@ -47,7 +47,18 @@ const routes = [
   {
     path: "/mypage",
     name: "mypage",
-    component: MyPageView,
+    component: () => import(/* webpackChunkName: "notice" */ "@/components/User/MyPage/MyInfo"),
+  },
+  {
+    path: "/mybookmarks",
+    name: "mybookmarks",
+    component: () =>
+      import(/* webpackChunkName: "notice" */ "@/components/User/MyPage/MyBookmarks"),
+  },
+  {
+    path: "/myplans",
+    name: "myplans",
+    component: () => import(/* webpackChunkName: "notice" */ "@/components/User/MyPage/MyPlans"),
   },
   {
     path: "/notice",
