@@ -8,13 +8,17 @@
               <h3 class="m-0" style="text-align: center">{{ planDetail.subject }}</h3>
             </b-col>
             <b-col class="mt-3 mx-0 col-lg-1 p-0">
-              <b-button @click="mySubmit" variant="warning" class="m-1" v-if="this.isLogin == true"
-                ><b-icon icon="bookmark-plus" class=""></b-icon
-              ></b-button>
+              <b-button
+                @click="putBookmark"
+                variant="warning"
+                class="m-1"
+                v-if="this.isLogin == true"
+                ><b-icon :icon="bookmark" class=""></b-icon>
+              </b-button>
             </b-col>
             <b-col class="mt-3 mx-0 col-lg-1 pb-2 pl-0 pr-2"
-              ><b-button @click="myReset" variant="info" class="m-1" v-if="this.isLogin == true"
-                ><b-icon icon="hand-thumbs-up" class=""></b-icon
+              ><b-button @click="putLike" variant="info" class="m-1" v-if="this.isLogin == true"
+                ><b-icon :icon="like" class=""></b-icon
               ></b-button>
             </b-col>
           </b-row>
@@ -31,8 +35,8 @@
 </template>
 
 <script>
-// import http from "@/api/index";
-import { mapState } from "vuex";
+import http from "@/api/index";
+import { mapActions, mapState } from "vuex";
 
 const planStore = "planStore";
 const userStore = "userStore";
@@ -42,18 +46,74 @@ export default {
   components: {},
   data() {
     return {
-      subject: "",
-      summary: "",
+      bookmark: "bookmark-plus",
+      like: "hand-thumbs-up",
     };
   },
   created() {},
   methods: {
-    mySubmit() {},
-    myReset() {},
+    putBookmark() {
+      let tmp = {
+        id: this.planDetail.planId,
+        userId: this.userId,
+      };
+      http
+        .put("/plan/bookmark", JSON.stringify(tmp))
+        .then(() => console.log(`success [${tmp}]`))
+        .catch(() => console.log("fail"));
+
+      let params = {
+        planId: this.planDetail.planId,
+      };
+      if (this.userId != null) {
+        params = {
+          userId: this.userId,
+          planId: this.planDetail.planId,
+        };
+      }
+      this.getPlanDetail(params);
+    },
+
+    putLike() {
+      let tmp = {
+        id: this.planDetail.planId,
+        userId: this.userId,
+      };
+      http
+        .put("/plan/like", JSON.stringify(tmp))
+        .then(() => console.log(`success [${tmp}]`))
+        .catch(() => console.log("fail"));
+
+      let params = {
+        planId: this.planDetail.planId,
+      };
+      if (this.userId != null) {
+        params = {
+          userId: this.userId,
+          planId: this.planDetail.planId,
+        };
+      }
+      this.getPlanDetail(params);
+    },
+    ...mapActions(planStore, ["getPlanDetail"]),
   },
   computed: {
     ...mapState(planStore, ["planDetail"]),
     ...mapState(userStore, ["userId", "isLogin"]),
+  },
+  watch: {
+    planDetail() {
+      if (this.planDetail.liked == true) {
+        this.like = "hand-thumbs-up-fill";
+      } else {
+        this.like = "hand-thumbs-up";
+      }
+      if (this.planDetail.bookmarked == true) {
+        this.bookmark = "bookmark-plus-fill";
+      } else {
+        this.bookmark = "bookmark-plus";
+      }
+    },
   },
 };
 </script>
