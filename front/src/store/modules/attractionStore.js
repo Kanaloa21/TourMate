@@ -11,6 +11,8 @@ const attractionStore = {
     selected: [12, 14, 15, 25, 28, 32, 38, 39],
     paging: 1,
     showDetail: false,
+    attractionDetail: null,
+    attractionComments: [],
   },
   getters: {
     top10Attractions(state) {
@@ -49,8 +51,16 @@ const attractionStore = {
       state.paging = data;
     },
 
+    SET_ATTRACTION_DETAIL(state, data) {
+      state.attractionDetail = data;
+    },
+
     SET_SHOW_DETAIL(state, data) {
       state.showDetail = data;
+    },
+
+    SET_ATTRACTION_COMMENTS(state, data) {
+      state.attractionComments = data;
     },
   },
   actions: {
@@ -80,6 +90,70 @@ const attractionStore = {
             console.log("좋아요 갱신 성공!");
           } else {
             console.log(commit);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async attractionDetail({ commit, dispatch }, payload) {
+      let url = "/tour/detail?contentId=" + payload.contentId;
+      if (payload.userId != null) {
+        url += "&userId=" + payload.userId;
+      }
+
+      await http
+        .get(url)
+        .then(({ data }) => {
+          if (data) {
+            commit("SET_ATTRACTION_DETAIL", data);
+            commit("SET_SHOW_DETAIL", true);
+            dispatch("attractionComments", payload.contentId);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async attractionComments({ commit }, payload) {
+      await http
+        .get("/tour/comment/" + payload)
+        .then(({ data }) => {
+          if (data.message === "success") {
+            commit("SET_ATTRACTION_COMMENTS", data.commentList);
+          } else {
+            console.log("댓글을 불러오지 못했습니다.");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async writeComment({ dispatch }, payload) {
+      await http
+        .post("/tour/comment", payload)
+        .then(({ data }) => {
+          if (data.message === "success") {
+            dispatch("attractionComments", payload.contentId);
+          } else {
+            console.log("댓글을 불러오지 못했습니다.");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async deleteComment({ dispatch }, payload) {
+      await http
+        .delete(`/tour/comment/${payload.id}`)
+        .then(({ data }) => {
+          if (data.message === "success") {
+            dispatch("attractionComments", payload.contentId);
+          } else {
+            console.log("댓글을 불러오지 못했습니다.");
           }
         })
         .catch((error) => {

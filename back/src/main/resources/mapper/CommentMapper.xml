@@ -8,6 +8,8 @@
 			ID, CONTENT_ID AS contentId, COMMENT, WRITER, WRITE_DATE AS writeDate
 		FROM 
 			ATTRACTION_COMMENT
+		WHERE
+			CONTENT_ID = #{contentId}
 			
 	</select>
 	
@@ -17,6 +19,8 @@
 			ID, PLAN_ID AS contentId, COMMENT, WRITER, WRITE_DATE AS writeDate
 		FROM 
 			PLAN_COMMENT
+		WHERE
+			CONTENT_ID = #{contentId}
 			
 	</select>
 	
@@ -38,7 +42,7 @@
 	
 	</insert>
 	
-	<delete id="deletePlanComment" >
+	<delete id="deleteTourComment" >
 	
 		DELETE FROM 
 			ATTRACTION_COMMENT
@@ -46,7 +50,7 @@
 	
 	</delete>
 	
-	<delete id="deleteTourComment">
+	<delete id="deletePlanComment">
 	
 		DELETE FROM 
 			PLAN_COMMENT
