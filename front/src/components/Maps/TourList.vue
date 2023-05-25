@@ -143,7 +143,7 @@ export default {
         userId: this.userId,
         contentId: attraction.contentId,
       };
-      this.attractionDetail(param);
+      this.getAttractionDetail(param);
     },
     async clickLike(attraction) {
       if (!this.userId) {
@@ -163,7 +163,14 @@ export default {
         keyword: this.keyword,
         userId: this.userId,
       };
-      this.searchAttractionList(params);
+      await this.searchAttractionList(params);
+
+      if (this.attractionDetail && attraction.contentId === this.attractionDetail.contentId) {
+        await this.getAttractionDetail({
+          contentId: attraction.contentId,
+          userId: this.userId,
+        });
+      }
     },
     submit() {
       if (!this.sidoCode && !this.gugunCode && !this.keyword) {
@@ -192,7 +199,7 @@ export default {
       this.gugunCode = gugunCode;
     },
 
-    ...mapActions(attractionStore, ["searchAttractionList", "updateLiked", "attractionDetail"]),
+    ...mapActions(attractionStore, ["searchAttractionList", "updateLiked", "getAttractionDetail"]),
     ...mapMutations(attractionStore, [
       "SET_MAP_CENTER_POS",
       "SET_MAP_FOCUS_ATTRACTION_INFO",
@@ -211,7 +218,12 @@ export default {
   },
 
   computed: {
-    ...mapState(attractionStore, ["attractionList", "paging", "mapFocusAttractionInfo"]),
+    ...mapState(attractionStore, [
+      "attractionList",
+      "paging",
+      "mapFocusAttractionInfo",
+      "attractionDetail",
+    ]),
     ...mapState(userStore, ["userId"]),
     ...mapGetters(attractionStore, ["top10Attractions"]),
     ...mapGetters(itemStore, ["getSidoCode", "getGugunCode", "getKeyword"]),

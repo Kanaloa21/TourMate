@@ -57,5 +57,13 @@
 		WHERE ID = #{commentId}
 	
 	</delete>
+	
+	<delete id="deletePlanCommentByPlanId">
+	
+		DELETE FROM 
+			PLAN_COMMENT
+		WHERE PLAN_ID = #{planId}
+	
+	</delete>
 
 </mapper>

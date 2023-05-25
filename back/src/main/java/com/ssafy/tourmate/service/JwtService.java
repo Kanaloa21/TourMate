@@ -32,14 +32,14 @@ public class JwtService {
 	private static final int REFRESH_TOKEN_EXPIRE_MINUTES = 2; // 주단위
 
 	public <T> String createAccessToken(UserDto dto) {
-//		return create(key, data, "access-token", 1000 * 60 * ACCESS_TOKEN_EXPIRE_MINUTES);
 		return create(dto, "access-token", 1000 * 60 * ACCESS_TOKEN_EXPIRE_MINUTES);
+//		return create(dto, "access-token", 1000 * 60 * ACCESS_TOKEN_EXPIRE_MINUTES);
 	}
 
 //	AccessToken에 비해 유효기간을 길게...
 	public <T> String createRefreshToken(UserDto dto) {
-//		return create(key, data, "refresh-token", 1000 * 60 * 60 * 24 * 7 * REFRESH_TOKEN_EXPIRE_MINUTES);
-		return create(dto, "refresh-token", 1000 * 150 * ACCESS_TOKEN_EXPIRE_MINUTES);
+		return create(dto, "refresh-token", 1000 * 60 * 60 * 24 * 7 * REFRESH_TOKEN_EXPIRE_MINUTES);
+//		return create(dto, "refresh-token", 1000 * 150 * ACCESS_TOKEN_EXPIRE_MINUTES);
 	}
 
 	//Token 발급
