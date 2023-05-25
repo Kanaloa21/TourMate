@@ -96,6 +96,7 @@ const userStore = {
             state.userName = null;
             state.isLogin = false;
             state.authorizeLevel = 0;
+            sessionStorage.clear();
             console.log("로그아웃 완료");
           },
           (error) => {

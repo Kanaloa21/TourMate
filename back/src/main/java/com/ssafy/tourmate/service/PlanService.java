@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.tourmate.dto.PlanAttractionDto;
 import com.ssafy.tourmate.dto.PlanDto;
+import com.ssafy.tourmate.mapper.CommentMapper;
 import com.ssafy.tourmate.mapper.PlanMapper;
 
 @Service
 public class PlanService {
 	
 	private PlanMapper planMapper;
+	private CommentMapper commentMapper;
 	
 	private PlanService(PlanMapper mapper) {
 		this.planMapper = mapper;
@@ -63,6 +65,7 @@ public class PlanService {
 	}
 
 	public int removePlan(int planId) {
+		commentMapper.deletePlanCommentByPlanId(planId);
 		planMapper.deletePlanAttractions(planId);
 		planMapper.deleteBookmark(planId, null);
 		planMapper.deleteLike(planId, null);

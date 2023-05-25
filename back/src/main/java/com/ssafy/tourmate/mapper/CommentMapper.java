@@ -16,5 +16,6 @@ public interface CommentMapper {
 	public List<CommentDto> selectPlanCommentList(int planId);
 	public int insertPlanComment(CommentDto dto);
 	public int deletePlanComment(int commentId);
+	public int deletePlanCommentByPlanId(int planId);
 	
 }
