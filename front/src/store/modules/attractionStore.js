@@ -99,7 +99,7 @@ const attractionStore = {
           console.log(error);
         });
     },
-    async attractionDetail({ commit, dispatch }, payload) {
+    async getAttractionDetail({ commit, dispatch }, payload) {
       let url = "/tour/detail?contentId=" + payload.contentId;
       if (payload.userId != null) {
         url += "&userId=" + payload.userId;
