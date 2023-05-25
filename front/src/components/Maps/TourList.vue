@@ -17,7 +17,7 @@
             v-model="keyword"
             placeholder="Enter로 검색"
             @keypress.enter="submit"
-            style="width: 240px"
+            style="width: 220px"
           ></b-form-input>
           <b-input-group-append>
             <b-button text="Button" variant="success" @click="submit"
@@ -195,10 +195,10 @@ hr {
   padding: 0px 0 0;
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 25%), 0 2px 10px 0 rgb(0 0 0 / 25%);
   /* 최소 창 크기 500px (크롬기준) */
-  width: 420px;
+  width: 400px;
   height: 100vh;
   z-index: 500;
-  background-color: rgb(133, 133, 132);
+  background-color: rgb(200, 200, 200);
 }
 
 .button {
@@ -228,11 +228,11 @@ hr {
   top: 20vh;
   left: 420px;
   padding: 100px 0 0;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 25%), 0 2px 10px 0 rgb(0 0 0 / 25%);
   width: 30px;
   height: 70px;
   padding: 0px;
-  background-color: rgb(59, 59, 59);
+  background-color: rgb(10, 10, 10);
 }
 
 .bb {

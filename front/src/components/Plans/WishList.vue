@@ -23,10 +23,19 @@
           <label class="form-check-label" for="disabled">DnD enabled</label>
         </div>
       </div> -->
-      <h3 class="mt-3" style="color: white; font-weight: bold">나의 북마크</h3>
-      <!-- <h3>Draggable {{ draggingInfo }}</h3> -->
-
-      <b-button href="#" variant="danger" class="mx-1" @click="clearPlan()"> 비우기 </b-button>
+      <b-row>
+        <b-col></b-col>
+        <b-col cols="6"
+          ><h1 class="mt-5" style="color: white; font-family: 'GangwonEduPowerExtraBoldA'">
+            나의 플랜
+          </h1></b-col
+        >
+        <b-col cols="4">
+          <b-button href="#" variant="danger" class="mx-2 mt-5" @click="clearPlan()">
+            비우기
+          </b-button></b-col
+        >
+      </b-row>
     </div>
     <hr />
     <div>

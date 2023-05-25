@@ -6,6 +6,7 @@
       <tour-list class="position-absolute side-list" style="z-index: 2" />
       <tour-detail class="position-absolute side-list-reverse" style="z-index: 3"></tour-detail>
     </div>
+    <avatar-dropdown class="side-list-reverse" style="z-index: 4"></avatar-dropdown>
   </div>
 </template>
 
@@ -14,10 +15,11 @@ import SidebarNav from "@/components/SidebarNav.vue";
 import BackgroundMap from "@/components/Maps/BackgroundMap.vue";
 import TourList from "@/components/Maps/TourList.vue";
 import TourDetail from "@/components/Maps/TourDetail.vue";
+import AvatarDropdown from "@/components/User/AvatarDropdown.vue";
 
 export default {
   name: "MapsView",
-  components: { BackgroundMap, SidebarNav, TourList, TourDetail },
+  components: { BackgroundMap, SidebarNav, TourList, TourDetail, AvatarDropdown },
   data() {
     return {
       message: "",

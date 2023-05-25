@@ -47,17 +47,20 @@ const routes = [
   {
     path: "/mypage",
     name: "mypage",
+    beforeEnter: onlyAuthUser,
     component: () => import(/* webpackChunkName: "notice" */ "@/components/User/MyPage/MyInfo"),
   },
   {
     path: "/mybookmarks",
     name: "mybookmarks",
+    beforeEnter: onlyAuthUser,
     component: () =>
       import(/* webpackChunkName: "notice" */ "@/components/User/MyPage/MyBookmarks"),
   },
   {
     path: "/myplans",
     name: "myplans",
+    beforeEnter: onlyAuthUser,
     component: () => import(/* webpackChunkName: "notice" */ "@/components/User/MyPage/MyPlans"),
   },
   {

@@ -88,7 +88,8 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 20px 20px 0 150px;
+  padding: 10px 20px 0 150px;
+  z-index: 600;
 }
 .icon {
   width: 40px;
