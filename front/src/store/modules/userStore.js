@@ -49,10 +49,10 @@ const userStore = {
     },
 
     // 토큰 검증
-    async checkUserAuth({ state, dispatch }, token) {
+    async checkUserAuth({ state, dispatch }) {
       console.log("토큰 검증 시작");
       await checkAuth(
-        token,
+        state.accessToken,
         ({ data }) => {
           if (data.message === "success") {
             console.log("토큰 무결성 검증 완료");

@@ -17,7 +17,7 @@ const onlyAuthUser = async (to, from, next) => {
 
   if (isLogin) {
     console.log("토큰 검증 요청");
-    await store.dispatch("userStore/checkUserAuth", store.state.accessToken);
+    await store.dispatch("userStore/checkUserAuth");
   }
   console.log("토큰 검증 완료");
 

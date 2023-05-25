@@ -90,6 +90,7 @@ public class UserController {
 	public ResponseEntity<Map<String, Object>> checkAuth(HttpServletRequest request) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
+		logger.info("토큰 검증 실행");
 
 		if (jwtService.checkToken(request.getHeader("access-token"))) {
 			resultMap.put("message", SUCCESS);
