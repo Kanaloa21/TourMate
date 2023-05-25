@@ -4,20 +4,14 @@
     <b-container class="mt-5 userInfo" v-if="userInfo">
       <b-row class="mt-5">
         <b-col> </b-col>
-        <b-col cols="8">
+        <b-col cols="12">
           <div>
             <b-card title="Card Title" no-body>
               <b-card-header header-tag="nav">
                 <b-nav card-header tabs>
-                  <b-nav-item active href="/mypage"
-                    ><router-link to="/mypage"></router-link>내 정보</b-nav-item
-                  >
-                  <b-nav-item href="/mybookmarks"
-                    ><router-link to="/mybookmarks"></router-link>내 북마크</b-nav-item
-                  >
-                  <b-nav-item href="/myplans"
-                    ><router-link to="/myplans"></router-link>내 플랜</b-nav-item
-                  >
+                  <b-nav-item active><router-link to="/mypage">내 정보</router-link></b-nav-item>
+                  <b-nav-item><router-link to="/mybookmarks">내 북마크</router-link></b-nav-item>
+                  <b-nav-item><router-link to="/myplans">내 플랜</router-link></b-nav-item>
                 </b-nav>
               </b-card-header>
               <b-card-body class="text-center">
@@ -81,7 +75,7 @@ export default {
   },
   created() {
     this.getUserInfo();
-    if (this.userInfo.gender == 1) {
+    if (this.userInfo != null && this.userInfo.gender == 1) {
       this.gender = "male";
     } else {
       this.gender = "female";

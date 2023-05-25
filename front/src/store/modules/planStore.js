@@ -31,8 +31,12 @@ const planStore = {
     },
   },
   actions: {
-    getWishList({ commit }, payload) {
-      let uri = "/plan?sortType=" + payload.sortType;
+    getPlanList({ commit }, payload) {
+      let uri = "/plan?";
+      if (payload.userId != null) {
+        uri = uri + "userId=" + payload.userId + "&";
+      }
+      uri = uri + "sortType=" + payload.sortType;
       console.log(uri);
       http.get(uri).then(({ data }) => {
         console.log("data", data);
