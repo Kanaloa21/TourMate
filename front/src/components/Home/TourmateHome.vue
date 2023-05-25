@@ -1,84 +1,89 @@
 <template>
-  <b-container fluid class="container">
-    <b-row>
-      <img src="@/assets/TOURMATE (1).png" alt="" />
-    </b-row>
-    <b-row class="center">
-      <b-col cols="6" class="carousel">
-        <b-carousel
-          id="carousel-1"
-          :interval="4000"
-          controls
-          indicators
-          background="#ababab"
-          img-width="512"
-          img-height="512"
-          style="text-shadow: 1px 1px 2px #333"
-        >
-          <!-- Text slides with image -->
-          <b-carousel-slide
-            img-src="https://cdn.eyesmag.com/content/uploads/posts/2022/03/21/gyeongbokgung-palace-night-01-1408c7c5-b5f5-4554-b3dc-7f3be6f75acc.jpg"
-          ></b-carousel-slide>
-
-          <!-- Slides with custom text -->
-          <b-carousel-slide
-            img-src="https://cdn.eyesmag.com/content/uploads/posts/2021/04/02/main-8435a3ed-7191-4696-b28d-aebf9cf0124a.jpg"
+  <div class="position-relative">
+    <!-- <img src="@/assets/logo.png" alt="" class="position-absolute logo" /> -->
+    <b-container fluid class="container">
+      <b-row> </b-row>
+      <b-row class="center">
+        <b-col></b-col>
+        <b-col cols="6" class="carousel">
+          <b-carousel
+            id="carousel-1"
+            :interval="4000"
+            controls
+            indicators
+            background="#ababab"
+            img-width="512"
+            img-height="512"
+            style="text-shadow: 1px 1px 2px #333"
           >
-          </b-carousel-slide>
+            <!-- Text slides with image -->
+            <b-carousel-slide
+              img-src="https://cdn.eyesmag.com/content/uploads/posts/2022/03/21/gyeongbokgung-palace-night-01-1408c7c5-b5f5-4554-b3dc-7f3be6f75acc.jpg"
+            ></b-carousel-slide>
 
-          <!-- Slides with image only -->
-          <b-carousel-slide
-            img-src="https://cdn.eyesmag.com/content/uploads/sliderImages/2022/11/23/01-1385c655-5c0a-4bad-81f0-cbc1dc6fb707.jpg"
-          ></b-carousel-slide>
+            <!-- Slides with custom text -->
+            <b-carousel-slide
+              img-src="https://cdn.eyesmag.com/content/uploads/posts/2021/04/02/main-8435a3ed-7191-4696-b28d-aebf9cf0124a.jpg"
+            >
+            </b-carousel-slide>
 
-          <!-- Slides with img slot -->
-          <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-          <b-carousel-slide
-            img-src="https://cdn.eyesmag.com/wp-content/uploads/2016/02/2019-seoul-international-fireworks-festival-will-take-place-in-October-01.jpg"
-          ></b-carousel-slide>
-        </b-carousel>
-      </b-col>
-      <b-col cols="6">
-        <div class="catch">
-          <h1><b class="head-word">M</b>ake</h1>
-          <h1><b class="head-word">A</b>mazing</h1>
-          <h1><b class="head-word">T</b>our</h1>
-          <h1><b class="head-word">E</b>xperiences</h1>
-        </div>
-        <br />
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col cols="3"></b-col>
-      <b-col cols="8">
-        <div class="sub">
-          <p>"<b>TOUR</b><b class="head-word"> MATE</b>"는 대한민국의 숨은 관광지를 발굴하고</p>
-          <p>국내 여행 문화와 산업의 발전을 위해</p>
-          <p>2023년 5월 서비스를 시작한 여행 플랫폼입니다.</p>
-        </div>
-      </b-col>
-      <b-col cols="1"></b-col>
-    </b-row>
-    <b-row class="justify-content-center m-5 sub">
-      <button class="goto btn-lg">
-        <router-link to="/maps" class="link">보러가기</router-link>
-      </button>
-    </b-row>
-    <b-row class="infographic mt-5">
-      <b-col
-        ><span class="counter-place h2"></span><span class="h2"> 곳의</span>
-        <h2>관광지</h2></b-col
-      >
-      <b-col
-        ><span class="counter-people h2"></span><span class="h2"> 명의</span>
-        <h2>사용자</h2></b-col
-      >
-      <b-col
-        ><span class="counter-plans h2"></span><span class="h2"> 가지의</span>
-        <h2>플랜</h2></b-col
-      >
-    </b-row>
-  </b-container>
+            <!-- Slides with image only -->
+            <b-carousel-slide
+              img-src="https://cdn.eyesmag.com/content/uploads/sliderImages/2022/11/23/01-1385c655-5c0a-4bad-81f0-cbc1dc6fb707.jpg"
+            ></b-carousel-slide>
+
+            <!-- Slides with img slot -->
+            <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
+            <b-carousel-slide
+              img-src="https://cdn.eyesmag.com/wp-content/uploads/2016/02/2019-seoul-international-fireworks-festival-will-take-place-in-October-01.jpg"
+            ></b-carousel-slide>
+          </b-carousel>
+        </b-col>
+        <b-col cols="5">
+          <div class="catch">
+            <h1><b class="head-word">M</b>ake</h1>
+            <h1><b class="head-word">A</b>mazing</h1>
+            <h1><b class="head-word">T</b>our</h1>
+            <h1><b class="head-word">E</b>xperiences</h1>
+          </div>
+          <br />
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="2"></b-col>
+        <b-col cols="3" class>
+          <img src="@/assets/logo.png" alt="" class="logo sub" />
+        </b-col>
+        <b-col cols="7" class="mt-4">
+          <div class="sub">
+            <p>"<b>TOUR</b><b class="head-word"> MATE</b>"는 대한민국의 숨은 관광지를 발굴하고</p>
+            <p>국내 여행 문화와 산업의 발전을 위해</p>
+            <p>2023년 5월 서비스를 시작한 여행 플랫폼입니다.</p>
+          </div>
+        </b-col>
+        <!-- <b-col cols="1"></b-col> -->
+      </b-row>
+      <b-row class="justify-content-center mb-5 sub">
+        <button class="goto btn-lg">
+          <router-link to="/maps" class="link">보러가기</router-link>
+        </button>
+      </b-row>
+      <b-row class="infographic mt-3">
+        <b-col
+          ><span class="counter-place h2"></span><span class="h2"> 곳의</span>
+          <h2>관광지</h2></b-col
+        >
+        <b-col
+          ><span class="counter-people h2"></span><span class="h2"> 명의</span>
+          <h2>사용자</h2></b-col
+        >
+        <b-col
+          ><span class="counter-plans h2"></span><span class="h2"> 가지의</span>
+          <h2>플랜</h2></b-col
+        >
+      </b-row>
+    </b-container>
+  </div>
 </template>
 
 <script>
@@ -247,5 +252,9 @@ h2 {
   font-size: 28px;
   border-radius: 0;
   border-width: 0;
+}
+
+.logo {
+  width: 210px;
 }
 </style>
