@@ -7,6 +7,7 @@
       <wish-list class="position-absolute side-list" style="z-index: 3" />
       <plan-write class="position-absolute anime-write" style="z-index: 2" />
     </div>
+    <avatar-dropdown></avatar-dropdown>
   </div>
 </template>
 
@@ -15,10 +16,11 @@ import SidebarNav from "@/components/SidebarNav.vue";
 import WishList from "@/components/Plans/WishList.vue";
 import PlanMap from "@/components/Plans/PlanMap.vue";
 import PlanWrite from "@/components/Plans/PlanWrite.vue";
+import AvatarDropdown from "@/components/User/AvatarDropdown.vue";
 
 export default {
   name: "PlansView",
-  components: { SidebarNav, WishList, PlanMap, PlanWrite },
+  components: { SidebarNav, WishList, PlanMap, PlanWrite, AvatarDropdown },
   data() {
     return {
       message: "",

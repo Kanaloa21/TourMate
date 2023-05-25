@@ -15,7 +15,7 @@
                 </b-nav>
               </b-card-header>
               <b-card-body class="text-center">
-                <h2>내 북마크</h2>
+                <h2>내 플랜</h2>
                 <hr class="my-1" />
                 <b-container class="mt-4">
                   <b-table

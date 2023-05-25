@@ -25,7 +25,14 @@
           <hr class="mt-0" />
           <b-row>
             <b-col>
-              {{ planDetail.summary }}
+              <b-form-textarea
+                id="textarea-plaintext"
+                plaintext
+                rows="3"
+                max-rows="3"
+                debounce="500"
+                :value="planDetail.summary"
+              ></b-form-textarea>
             </b-col>
           </b-row>
         </b-form>
