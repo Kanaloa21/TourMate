@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 /*
   namespaced: true를 사용했기 때문에 선언해줍니다.
@@ -15,7 +15,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
     키: 값
     memberStore: memberStore,
     houseStore: houseStore
-  }  
+  }
 */
 const itemStore = "itemStore";
 
@@ -28,6 +28,7 @@ export default {
   },
   computed: {
     ...mapState(itemStore, ["sidos"]),
+    ...mapGetters(itemStore, ["getSidoCode"]),
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -38,12 +39,16 @@ export default {
     this.CLEAR_SIDO_LIST();
     this.getSido();
   },
+  mounted() {
+    this.sidoCode = this.getSidoCode;
+  },
   methods: {
     ...mapActions(itemStore, ["getSido"]),
-    ...mapMutations(itemStore, ["CLEAR_SIDO_LIST"]),
+    ...mapMutations(itemStore, ["CLEAR_SIDO_LIST", "SET_SIDO_CODE"]),
     changeSido() {
       // console.log("시도 선택 ::: " + this.sidoCode);
       this.$emit("select-sido", this.sidoCode);
+      this.SET_SIDO_CODE(this.sidoCode);
     },
   },
 };

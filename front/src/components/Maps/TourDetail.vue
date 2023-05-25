@@ -52,6 +52,7 @@ import TourCommentItem from "./TourCommentItem.vue";
 
 const attractionStore = "attractionStore";
 const userStore = "userStore";
+const planStore = "planStore";
 
 export default {
   name: "TourDetail",
@@ -65,7 +66,7 @@ export default {
   created() {},
   methods: {
     ...mapActions(attractionStore, ["writeComment", "updateLiked"]),
-    ...mapMutations(attractionStore, ["ADD_WISH_LIST"]),
+    ...mapMutations(planStore, ["ADD_WISH_LIST"]),
     handleNotificationListScroll(e) {
       const { scrollHeight, scrollTop, clientHeight } = e.target;
       const isAtTheBottom = scrollHeight === scrollTop + clientHeight;

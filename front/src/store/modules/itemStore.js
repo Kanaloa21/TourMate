@@ -3,11 +3,43 @@ import http from "@/api/index.js";
 const itemStore = {
   namespaced: true,
   state: {
+    sidoCode: 0,
+    gugunCode: 0,
+    keyword: null,
     sidos: [{ value: 0, text: "선택하세요" }],
     guguns: [{ value: 0, text: "선택하세요" }],
   },
-  getters: {},
+  getters: {
+    sidoCode(state) {
+      return state.sidoCode;
+    },
+    getSidoCode(state) {
+      return state.sidoCode;
+    },
+    gugunCode(state) {
+      return state.gugunCode;
+    },
+    getGugunCode(state) {
+      return state.gugunCode;
+    },
+    keyword(state) {
+      return state.keyword;
+    },
+    getKeyword(state) {
+      return state.keyword;
+    },
+  },
   mutations: {
+    SET_SIDO_CODE(state, data) {
+      state.sidoCode = data;
+    },
+    SET_GUGUN_CODE(state, data) {
+      state.gugunCode = data;
+    },
+    SET_KEYWORD(state, data) {
+      state.keyword = data;
+    },
+
     CLEAR_SIDO_LIST(state) {
       state.sidos = [{ value: 0, text: "선택하세요" }];
     },
