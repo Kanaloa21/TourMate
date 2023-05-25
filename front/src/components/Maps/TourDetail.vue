@@ -20,9 +20,10 @@
           >평가 {{ attractionComments.length }}</b-button
         ></b-col
       >
-      <b-col class="px-2"
-        ><b-button size="md" variant="info"
-          >좋아요 {{ attractionDetail.likeCount }}</b-button
+      <b-col
+        ><b-button size="sm" variant="danger" @click="clickLike"
+          >좋아요<br />
+          {{ attractionDetail.likeCount }}</b-button
         ></b-col
       >
     </b-row>
@@ -43,12 +44,13 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import TourCommentItem from "./TourCommentItem.vue";
 
 const attractionStore = "attractionStore";
 const userStore = "userStore";
 const planStore = "planStore";
+const itemStore = "itemStore";
 
 export default {
   name: "TourDetail",
@@ -61,7 +63,12 @@ export default {
   },
   created() {},
   methods: {
-    ...mapActions(attractionStore, ["writeComment", "updateLiked"]),
+    ...mapActions(attractionStore, [
+      "writeComment",
+      "updateLiked",
+      "searchAttractionList",
+      "getAttractionDetail",
+    ]),
     ...mapMutations(planStore, ["ADD_WISH_LIST"]),
     handleNotificationListScroll(e) {
       const { scrollHeight, scrollTop, clientHeight } = e.target;
@@ -94,11 +101,40 @@ export default {
     addPlan() {
       this.ADD_WISH_LIST(this.attractionDetail);
     },
+
+    async clickLike() {
+      if (!this.userId) {
+        alert("로그인 후 좋아요가 가능합니다");
+        return;
+      }
+
+      let param = {
+        id: this.attractionDetail.contentId,
+        userId: this.userId,
+      };
+      await this.updateLiked(param);
+
+      param = {
+        sidoCode: this.sidoCode,
+        gugunCode: this.gugunCode,
+        keyword: this.keyword,
+        userId: this.userId,
+      };
+      await this.searchAttractionList(param);
+
+      param = {
+        contentId: this.attractionDetail.contentId,
+        userId: this.userId,
+      };
+
+      await this.getAttractionDetail(param);
+    },
   },
 
   computed: {
     ...mapState(attractionStore, ["showDetail", "attractionDetail", "attractionComments"]),
     ...mapState(userStore, ["userId"]),
+    ...mapGetters(itemStore, ["sidoCode", "gugunCode", "keyword"]),
     commentList() {
       return this.attractionComments.slice(0, this.commentPage);
     },

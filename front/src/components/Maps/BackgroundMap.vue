@@ -136,7 +136,7 @@ export default {
       this.customOverlay.setMap(null);
     },
 
-    ...mapActions(attractionStore, ["searchAttractionList", "attractionDetail"]),
+    ...mapActions(attractionStore, ["searchAttractionList", "getAttractionDetail"]),
     ...mapMutations(attractionStore, [
       "SET_MAP_CENTER_POS",
       "SET_FILTERED_ATTRACTION_LIST",
@@ -176,7 +176,7 @@ export default {
         userId: this.userId,
         contentId: attraction.contentId,
       };
-      this.attractionDetail(param);
+      this.getAttractionDetail(param);
     },
     selected() {
       this.SET_SELECTED(this.selected);

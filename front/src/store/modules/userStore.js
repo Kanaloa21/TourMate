@@ -49,10 +49,10 @@ const userStore = {
     },
 
     // 토큰 검증
-    async checkUserAuth({ state, dispatch }, token) {
+    async checkUserAuth({ state, dispatch }) {
       console.log("토큰 검증 시작");
       await checkAuth(
-        token,
+        state.accessToken,
         ({ data }) => {
           if (data.message === "success") {
             console.log("토큰 무결성 검증 완료");
@@ -96,6 +96,7 @@ const userStore = {
             state.userName = null;
             state.isLogin = false;
             state.authorizeLevel = 0;
+            sessionStorage.clear();
             console.log("로그아웃 완료");
           },
           (error) => {

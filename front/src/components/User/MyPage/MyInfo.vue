@@ -73,12 +73,12 @@ export default {
       gender: "male",
     };
   },
-  created() {
+  mounted() {
     this.getUserInfo();
-    if (this.userInfo != null && this.userInfo.gender == 1) {
-      this.gender = "male";
-    } else {
+    if (this.userInfo != null && this.userInfo.gender == 0) {
       this.gender = "female";
+    } else {
+      this.gender = "male";
     }
   },
   methods: {
