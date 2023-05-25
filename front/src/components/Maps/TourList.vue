@@ -80,6 +80,11 @@ export default {
     };
   },
   created() {},
+  mounted() {
+    this.sidoCode = this.getSidoCode;
+    this.gugunCode = this.getGugunCode;
+    this.keyword = this.getKeyword;
+  },
   methods: {
     showNotification() {
       const notification = document.getElementById("notification-container");
@@ -149,6 +154,11 @@ export default {
       this.searchAttractionList(params);
     },
     submit() {
+      if (!this.sidoCode && !this.gugunCode && !this.keyword) {
+        alert("시도, 구군, 키워드 중 최소 하나는 선택 또는 입력해야 합니다!");
+        return;
+      }
+
       this.SET_PAGING(1);
       this.SET_SHOW_DETAIL(false);
       this.SET_MAP_FOCUS_ATTRACTION_INFO(null);
@@ -179,7 +189,12 @@ export default {
       "SET_SHOW_DETAIL",
     ]),
     ...mapActions(itemStore, ["getGugun"]),
-    ...mapMutations(itemStore, ["CLEAR_GUGUN_LIST"]),
+    ...mapMutations(itemStore, [
+      "CLEAR_GUGUN_LIST",
+      "SET_SIDO_CODE",
+      "SET_GUGUN_CODE",
+      "SET_KEYWORD",
+    ]),
     ...mapMutations(planStore, ["ADD_WISH_LIST"]),
   },
 
@@ -187,6 +202,7 @@ export default {
     ...mapState(attractionStore, ["attractionList", "paging", "mapFocusAttractionInfo"]),
     ...mapState(userStore, ["userId"]),
     ...mapGetters(attractionStore, ["top10Attractions"]),
+    ...mapGetters(itemStore, ["getSidoCode", "getGugunCode", "getKeyword"]),
   },
 };
 </script>
