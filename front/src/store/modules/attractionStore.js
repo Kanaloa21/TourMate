@@ -3,6 +3,9 @@ import http from "@/api/index.js";
 const attractionStore = {
   namespaced: true,
   state: {
+    sidoCode: 0,
+    gugunCode: 0,
+    keyword: null,
     attractionList: [],
     mapCenterPos: { lat: 36.355, lng: 127.2991 },
     mapFocusAttractionInfo: null,

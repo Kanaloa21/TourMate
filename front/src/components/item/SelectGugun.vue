@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 /*
   namespaced: true를 사용했기 때문에 선언해줍니다.
@@ -38,13 +38,16 @@ export default {
   },
   computed: {
     ...mapState(itemStore, ["guguns"]),
+    ...mapGetters(itemStore, ["getGugunCode"]),
   },
   created() {},
+
   methods: {
     ...mapActions(itemStore, ["getGugun"]),
-    ...mapMutations(itemStore, ["CLEAR_GUGUN_LIST"]),
+    ...mapMutations(itemStore, ["CLEAR_GUGUN_LIST", "SET_GUGUN_CODE"]),
     changeGugun() {
       this.$emit("select-gugun", this.gugunCode);
+      this.SET_GUGUN_CODE(this.gugunCode);
     },
   },
 };
