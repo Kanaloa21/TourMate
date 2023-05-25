@@ -23,7 +23,7 @@
                   <b-table
                     striped
                     hover
-                    :items="planList"
+                    :items="bookmarkList"
                     :fields="fields"
                     @row-clicked="viewPlanDetail"
                   >
@@ -60,6 +60,7 @@ export default {
         { key: "createTime", label: "작성일", tdClass: "tdClass" },
         { key: "hit", label: "조회수", tdClass: "tdClass" },
       ],
+      bookmarkList: [],
     };
   },
   created() {
@@ -68,6 +69,8 @@ export default {
       sortType: 0,
     };
     this.getPlanList(payload);
+    this.bookmarkList = this.planList.filter((data) => data.bookmarked == true);
+    console.log("bookmarkList: " + this.bookmarkList);
   },
   methods: {
     viewPlanDetail(plan) {
@@ -80,6 +83,7 @@ export default {
   },
   computed: {
     ...mapState(userStore, ["userId"]),
+    ...mapState(planStore, ["planList"]),
   },
 };
 </script>

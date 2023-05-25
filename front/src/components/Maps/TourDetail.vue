@@ -4,7 +4,7 @@
     style="overflow-y: scroll"
     @scroll="handleNotificationListScroll"
   >
-    <div><h1>title</h1></div>
+    <div><h2 class="mt-3">title</h2></div>
     <hr />
     <div>내용입력</div>
   </div>
@@ -50,17 +50,20 @@ hr {
 }
 .list {
   /* position: fixed; */
-  top: 0vh;
+  top: 10vh;
   bottom: 0;
   /* left: 80px; */
   right: 0vw;
   padding: 0px 0 0;
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 25%), 0 2px 10px 0 rgb(0 0 0 / 25%);
   /* 최소 창 크기 500px (크롬기준) */
-  width: 350px;
-  height: 100vh;
+  width: 300px;
+  height: 80vh;
   z-index: 500;
-  background-color: rgb(133, 133, 132);
+  background-color: rgb(255, 255, 255);
+  color: black;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
 }
 
 .button {

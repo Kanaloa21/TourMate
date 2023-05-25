@@ -3,8 +3,8 @@
     <div id="map" class="position-absolute" style="z-index: 2"></div>
     <b-form-group
       v-slot="{ ariaDescribedby }"
-      class="position-absolute content-types"
-      style="z-index: 3"
+      class="position-absolute content-types cb p-2"
+      style="z-index: 3; text-align: left"
     >
       <b-form-checkbox-group
         v-cloak
@@ -12,7 +12,6 @@
         :options="options"
         :aria-describedby="ariaDescribedby"
         size="sm"
-        buttons
         stacked
       ></b-form-checkbox-group>
     </b-form-group>
@@ -31,7 +30,7 @@ export default {
       markers: [],
       infowindow: null,
       customOverlay: null,
-      selected: [12, 14, 15, 25, 28, 32, 38, 39],
+      selected: [12],
       options: [
         { text: "관광지", value: 12 },
         { text: "문화시설", value: 14 },
@@ -228,8 +227,12 @@ export default {
 }
 
 .content-types {
-  width: 100px;
-  left: 520px;
+  width: 140px;
+  left: 500px;
   top: 20px;
+  color: white;
+  background-color: rgb(133, 133, 132);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 25%), 0 2px 10px 0 rgb(0 0 0 / 25%);
+  border-radius: 10px;
 }
 </style>
