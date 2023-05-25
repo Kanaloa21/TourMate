@@ -1,28 +1,6 @@
 <template>
   <div class="px-4 list bb scroll" style="overflow-y: scroll">
-    <!-- <div
-      id="ww_7bcd871882a83"
-      v="1.3"
-      loc="id"
-      a='{"t":"ticker","lang":"ko","sl_lpl":1,"ids":[],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'
-    >
-      Weather Data Source:
-      <a href="https://wetterlabs.de/wetter_suwon/woche/" id="ww_7bcd871882a83_u" target="_blank"
-        >das wetter Suwon 7 tage</a
-      >
-    </div> -->
     <div>
-      <!-- <div class="form-group">
-        <div class="btn-group-vertical buttons" role="group" aria-label="Basic example">
-          <button class="btn btn-secondary" @click="add">Add</button>
-          <button class="btn btn-secondary" @click="replace">Replace</button>
-        </div>
-
-        <div class="form-check">
-          <input id="disabled" type="checkbox" v-model="enabled" class="form-check-input" />
-          <label class="form-check-label" for="disabled">DnD enabled</label>
-        </div>
-      </div> -->
       <b-row>
         <b-col></b-col>
         <b-col cols="6"
@@ -48,15 +26,6 @@
         @start="dragging = true"
         @end="dragging = false"
       >
-        <!-- <div v-for="attraction in top10Attractions" :key="attraction.contentId" class="list-group list-item">
-        <b-card
-          :title="attraction.title"
-          tag="article"
-          style="max-width: 20rem; color: black"
-          class="m-4"
-        >
-        </b-card>
-      </div> -->
         <div
           class="list-group-item"
           v-for="element in wishList"
@@ -90,11 +59,7 @@ export default {
     };
   },
   created() {},
-  mounted() {
-    // const script = document.createElement("script");
-    // script.setAttribute("src", "https://app1.weatherwidget.org/js/?id=ww_7bcd871882a83");
-    // document.head.appendChild(script);
-  },
+  mounted() {},
   methods: {
     checkMove: function (e) {
       window.console.log("Future index: " + e.draggedContext.futureIndex);

@@ -5,21 +5,19 @@
     style="overflow-y: scroll"
     @scroll="handleNotificationListScroll"
   >
-    <div><b-img class="mt-2 rounded" :src="attractionDetail.imageURL" width="280px"></b-img></div>
+    <div><b-img class="mt-2 rounded" :src="attractionDetail.imageURL" width="260px"></b-img></div>
     <div class="mt-4 font">
-      <h1>{{ attractionDetail.title }}</h1>
+      <h3>{{ attractionDetail.title }}</h3>
     </div>
-    <hr />
     <div>{{ attractionDetail.addr1 }}</div>
 
     <b-row class="mt-3">
-      <b-col
-        ><b-button href="#" size="md" variant="warning" @click="addPlan()"> 담기 </b-button></b-col
+      <b-col class="px-0"
+        ><b-button size="md" variant="warning" @click="addPlan()">담기</b-button></b-col
       >
-      <b-col
-        ><b-button size="sm" variant="success"
-          >평가<br />
-          {{ attractionComments.length }}</b-button
+      <b-col class="px-1"
+        ><b-button size="md" variant="success"
+          >평가 {{ attractionComments.length }}</b-button
         ></b-col
       >
       <b-col
@@ -29,16 +27,15 @@
         ></b-col
       >
     </b-row>
-    <div class="p-2 mt-3 bg-light rounded">
+    <div class="p-2 mt-3 bg-light rounded rowb">
       <b-input-group v-if="userId" class="mt-3 mb-3">
-        <b-form-input placeholder="한줄평을 남겨주세요!" v-model="comment"></b-form-input>
+        <b-form-input
+          placeholder="한줄평을 남겨주세요!"
+          v-model="comment"
+          @keypress.enter="writeAttractionComment"
+        ></b-form-input>
         <b-input-group-append>
-          <b-button
-            variant="info"
-            @keypress.enter="writeAttractionComment"
-            @click="writeAttractionComment"
-            >작성</b-button
-          >
+          <b-button variant="info" @click="writeAttractionComment">작성</b-button>
         </b-input-group-append>
       </b-input-group>
       <tour-comment-item v-for="item in commentList" :key="item.id" v-bind="item" />
@@ -175,6 +172,9 @@ hr {
   border-bottom-left-radius: 30px;
 }
 
+.rowb {
+  background-color: rgb(200, 200, 200);
+}
 .button {
   border-width: 2px;
   border-radius: 15px;
